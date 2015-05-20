@@ -1,0 +1,14 @@
+May 19, 2015
+	
+	i remade my file, and try to understand the code that i refered to google,
+stackoverflow, and etc.
+	i made the cakephp set up, and i was not able to made the setup layout for
+bootstrap but i know already how to setup layout bootstrap.
+	i made the login page, and try to understand the codes in my UsersController
+
+May 20, 2015
+
+	 I made the login and registration and understanding my code to familiarize
+its algorithm, to understand its workflow.
+	 I made the User Profile update page, but lacked in uploading the picture,
+	 I made Message model and researched about sending message 	
