@@ -1,8 +1,15 @@
-<h1>this is home page</h1>
-<?php echo $this->Html->link('Profile', array('action' => 'profile', $this->Session->read('Auth.User.id'))); ?> || 
-<?php echo $this->Html->link('Message', array('action' => 'message')); ?> || 
-<?php echo $this->Html->link('Logout', array('action' => 'logout')); ?><br><br>
-<img src="" height="120" width="120" alt=""><br><br>
+<div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation"><?php echo $this->Html->link('Profile', array('action' => 'profile', $this->Session->read('Auth.User.id'))); ?></li>
+        <li role="presentation"><?php echo $this->Html->link('Message', array('controller' => 'messages','action' => 'message')); ?></li>
+        <li role="presentation"><?php echo $this->Html->link('Logout', array('action' => 'logout')); ?></li>
+      </ul>
+    </nav>
+    <h3 class="text-muted">Home</h3>
+</div>
+
+<img src="<?php echo $this->webroot; ?>img/upload/jake.jpg" height="120" width="120" alt=""><br><br>
 <b><?php echo ucfirst($profile['name']); ?></b><br><br>
 Gender: <?php 
 			if ($profile['gender'] == 1) {
