@@ -19,7 +19,7 @@ class UsersController extends AppController {
 
         //if already logged-in, redirect
         if($this->Session->check('Auth.User')){
-            $this->redirect(array('action' => 'home'));      
+            $this->redirect(array('controller' => 'users', 'action' => 'home'));      
         }
          
         // if we get the post information, try to authenticate
@@ -34,7 +34,7 @@ class UsersController extends AppController {
                 $this->User->validate['name'] = array();
                 $this->User->save($data);
                 $this->Session->setFlash(__('Welcome, '. $this->Auth->user('name'), array('class' => 'bg-warning')));
-                $this->redirect(array('action' => 'home'));
+                $this->redirect(array('controller' => 'users', 'action' => 'home'));
             } else {
                $this->Session->setFlash(__('Invalid name or password'));
             }

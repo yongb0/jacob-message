@@ -1,3 +1,4 @@
+
 <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right">
@@ -21,8 +22,14 @@
 	<?php // echo $this->Html->link('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id'])); ?>
 </div>
 <?php } else { ?>
-<div class="alert alert-success">
-	<h2><?php echo $this->Html->link($message['Message']['from_id'], array('controller' => 'messages', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h2>
+<div class="alert alert-success from">
+<div class='float-left'>
+<?php if ($this->Session->read('Auth.User.image') == '') { ?>
+<?php echo $this->Html->image('default.png', array('height' => '120', 'width' => '120')); ?><br><br>
+<?php } else { ?>
+<?php echo $this->Html->image('upload/' . $this->Session->read('Auth.User.image'), array('id' => 'img', 'height' => '120', 'width' => '120')); ?><br>
+<?php } ?> 
+	</div>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
 	<p><?php echo $message['Message']['content']; ?></p><hr>
 	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
@@ -41,6 +48,6 @@
 <?php unset($message); ?>
 <nav>
 	<ul class="pager">
-		<li><a href="" title="">Show more..</a></li>
+		<li><?php echo $this->Paginator->next(__('Show more..', true) . '', array(), null, array('class' => 'disabled'));?></li>
 	</ul>
 </nav>

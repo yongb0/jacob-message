@@ -23,12 +23,17 @@ $(document).ready(function() {
 <h2>Profile</h2>
 
 <?php echo $this->Form->create('User', array('enctype' => 'multipart/form-data')); ?><br>	
+<?php if ($profile['image'] == '') { ?>
+<?php echo $this->Html->image('default.png', array('height' => '120', 'width' => '120')); ?><br><br>
+<?php } else { ?>
 <?php echo $this->Html->image('upload/' . $profile['image'], array('id' => 'img', 'height' => '120', 'width' => '120')); ?>
+<?php } ?>
+
 <?php echo $this->Form->input('id', array('value' => $profile['id'], 'readonly')); ?>
 <?php echo $this->Form->file('image', array('type' => 'file','id' => 'file')); ?>
 <br>
 Name: <?php echo $this->Form->input('name', array('class' => 'form-control', 'value' => $profile['name'], 'label' => false)); ?>
-Birthdate: <?php echo $this->Form->date('birthdate', array('class' => 'form-control', 'dateFormat' => 'dmY', 'value' => $this->Time->format('d/m/Y',$profile['birthdate']))); ?>
+Birthdate: <?php echo $this->Form->date('birthdate', array('class' => 'form-control', 'dateFormat' => 'dmY', 'value' => $this->Time->format('yyyy-MM-dd',$profile['birthdate']))); ?>
 Gender: 
 <input type="radio" name="data[User][gender]" id="blankRadio1" value="1" <?php if ($profile['gender'] == 1) { echo 'checked = checked' ;} ?> >Male
 <input type="radio" name="data[User][gender]" id="blankRadio1" value="2" <?php if ($profile['gender'] == 2) { echo 'checked = checked' ;} ?> >Female<br>

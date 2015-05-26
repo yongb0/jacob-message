@@ -1,4 +1,10 @@
-
+<script>
+$(document).ready(function() {
+	$('#delete').click(function() {
+	$('#message').fadeOut('slow');
+	});
+});
+</script>
 <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right">
@@ -15,22 +21,23 @@
 <hr>
 <?php foreach($messages as $message): ?>
 <?php if ($this->Session->read('Auth.User.id') != $message['Message']['from_id']) { ?>
-<div class="alert alert-info">
+<div class="alert alert-info" id='message'>
 	<h3>From: <?php echo $this->Html->link($message['Message']['from_id'], array('controller' => 'messages', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h3>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
 	<p><?php echo $message['Message']['content']; ?></p><hr>
 	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
-	<button><?php echo $this->Html->link('View Conversation', array('controller' => 'messages', 'action' => 'conversation', $message['Message']['id'])); ?></button>
-	<button><?php echo $this->Html->link('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id']) ); ?></button>
+	<button id='#message'><?php echo $this->Html->link('View Conversation', array('controller' => 'messages', 'action' => 'conversation', $message['Message']['id'])); ?></button>
+	<p id='delete'>click mes</p>
+	<button onclick='$('#message').fadeOut(300, function());'><?php echo $this->Html->link('Delete', array('controller' => 'messages', 'id' => 'delete', 'action' => 'delete', $message['Message']['id']) ); ?></button>
 </div>
 <?php } else { ?>
-<div class="alert alert-success">
-	<h2><?php echo $this->Html->link($message['Message']['from_id'], array('controller' => 'messages', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h2>
+<div class="alert alert-success from" id='message'>
+	<h2><?php echo $this->Html->link($this->Session->read('Auth.User.name'), array('controller' => 'messages', 'id' => 'delete', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h2>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
 	<p><?php echo $message['Message']['content']; ?></p><hr>
 	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
 	<?php // echo $this->Form->submit('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id'])); ?>	
-	<button><?php echo $this->Html->link('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id'])); ?></button>
+	<button onclick='$('#message').fadeOut(300, function());'><?php echo $this->Html->link('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id'])); ?></button>
 </div>
 <?php } ?>
 <?php 

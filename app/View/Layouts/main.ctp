@@ -29,12 +29,24 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css(array('bootstrap.min', 'signin', 'jumbotron-narrow'));
-		echo $this->Html->script(array('jquery-2.1.4.min'));
+		echo $this->Html->script(array('jquery-2.1.4.min', 'delete'));
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	<style type="text/css">
+	
+	.float-left{
+		margin-left: 500px;
+	}
+	.from{
+		margin-left: 50px;
+	}
+	.to {
+
+	}
+</style>
 </head>
 <body>
 	<div class="container">

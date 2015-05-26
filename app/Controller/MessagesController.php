@@ -20,7 +20,8 @@ class MessagesController extends AppController {
 		$this->layout = 'main';
 		$this->paginate = array(
 			'limit' => 5,
-			'conditions' => array('status' => '1', 'to_id' => $this->Session->read('Auth.User.id')) ,
+			// 'conditions' => array('status' => '1', 'to_id' => $this->Session->read('Auth.User.id')) ,
+			'conditions' => array('status = 1 OR to_id = '. $this->Session->read('Auth.User.id').' OR from_id = ' .$this->Session->read('Auth.User.id')),
 			'order' => array('Message.created' => 'desc')
 			);
 
@@ -33,6 +34,13 @@ class MessagesController extends AppController {
 		$this->layout = 'main';
 		$this->loadModel('User');
 		$userid = $this->Session->read('Auth.User.id');
+		$users = $this->User->find('all', array(
+									"conditions" => array("name = '".$this->request->data['User']['name']."' ")
+										));
+		foreach ($users as $user):
+			// pr($user);
+			endforeach;
+		$this->request->data['Message']['to_id'] = $user['User']['id'];
 		$this->request->data['Message']['from_id'] = $userid;
 		$this->request->data['Message']['status'] = 1;
 		if ($this->request->is('post')) {
@@ -80,10 +88,12 @@ class MessagesController extends AppController {
 											);
 			
 			foreach($users as $user) {
-				$array[] =  array($user['User']['name'], $user['User']['id']) ;
+				$array[] =  array($user['User']['name']) ;
+				// $array = $user['User']['name'];
 			}
 			
 			echo json_encode($array);
+
 		}
 
 
@@ -93,13 +103,15 @@ class MessagesController extends AppController {
 
 		$this->loadModel('User');
 		$this->layout = 'main';
+		$users = $this->User->find('all', array(
+											'conditions' => array('id = '. $id)
+										));
 		$this->paginate = array(
 			'limit' => 5,
 			// 'conditions' => array('status' => '1', 'to_id' => $this->Session->read('Auth.User.id')),
 			'conditions' => 'status = 1 OR to_id = ' .$id. ' OR from_id = ' .$this->Session->read('Auth.User.id'). '' ,
 			'order' => array('Message.created' => 'asc')
 			);
-
 		$messages = $this->paginate('Message');
 		$this->set(compact('messages'));
 
@@ -114,13 +126,13 @@ class MessagesController extends AppController {
 		}
 	}
 
-	public function deleteParent($id = null) {
+	// public function deleteParent($id = null) {
 
-		$this->Message->id = $id;
-		if ($this->Message->saveField('status', 0)) {
+	// 	$this->Message->id = $id;
+	// 	if ($this->Message->saveField('status', 0)) {
 
-		}
-	}
+	// 	}
+	// }
 
 
 
