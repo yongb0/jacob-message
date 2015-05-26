@@ -45,7 +45,7 @@ class User extends AppModel {
                 'message' => 'Birthdate is required.'
                 )
             ),
-        'hubby' => array(
+        'hobby' => array(
             'required' => array(
                 'rule' => array('notEmpty'),
                 'message' => 'Hubby is required.'
@@ -79,11 +79,6 @@ class User extends AppModel {
                 'message' => 'Both passwords must match.'
             )
         ),
-
-        'image' => array(
-            'allowEmpty' => true,
-            'required' => false
-            ),
 
         'created_ip' => array(
 

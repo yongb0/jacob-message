@@ -1,3 +1,4 @@
+
 <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right">
@@ -8,33 +9,37 @@
     </nav>
     <h3 class="text-muted"><?php echo $this->Html->link('Home', array('controller' => 'users', 'action' => 'home')); ?></h3>
 </div>
-
 <h2>Messages</h2>
-<a href="/messages/createmessage"><button>Compose Message</button></a>
+<button><?php echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button>
 <br>
 <hr>
-	<?php 
-
-		$count = 0;
-		foreach($messages as $message):
-			$count++;
-		if ($count % 1) { echo '<tr>'; } else  echo '<tr class="zebra">'
-		
-	 ?>
+<?php foreach($messages as $message): ?>
+<?php if ($this->Session->read('Auth.User.id') != $message['Message']['from_id']) { ?>
 <div class="alert alert-info">
-<h2><?php echo $this->Html->link($message['Message']['from_id'], array('controller' => 'messages', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h2>
+	<h3>From: <?php echo $this->Html->link($message['Message']['from_id'], array('controller' => 'messages', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h3>
+	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
+	<p><?php echo $message['Message']['content']; ?></p><hr>
+	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
+	<button><?php echo $this->Html->link('View Conversation', array('controller' => 'messages', 'action' => 'conversation', $message['Message']['id'])); ?></button>
+	<button><?php echo $this->Html->link('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id']) ); ?></button>
+</div>
+<?php } else { ?>
+<div class="alert alert-success">
+	<h2><?php echo $this->Html->link($message['Message']['from_id'], array('controller' => 'messages', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h2>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
 	<p><?php echo $message['Message']['content']; ?></p><hr>
 	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
 	<?php // echo $this->Form->submit('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id'])); ?>	
 	<button><?php echo $this->Html->link('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id'])); ?></button>
 </div>
+<?php } ?>
 <?php 
 	endforeach;
 	unset($message);
 ?>
+
 <nav>
 	<ul class="pager">
-		<li><a href="" title="">Show more..</a></li>
+		<li><?php echo $this->Paginator->next(__('Show more..', true) . '', array(), null, array('class' => 'disabled'));?></li>
 	</ul>
 </nav>

@@ -1,4 +1,14 @@
-<?php pr($profile); ?>
+<?php //pr($profile); ?>
+<script>
+$(document).ready(function() {
+	$("#file").change(function() {
+		var img = URL.createObjectURL($("#file")[0].files[0]);
+		$("#img").attr('src',img);
+		$('#img').attr('height', 120);
+		$('#img').attr('width', 120);
+	});
+});
+</script>
 <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right">
@@ -12,18 +22,17 @@
 <br>
 <h2>Profile</h2>
 
-<?php echo $this->Form->create('User', array('type' => 'file')); ?><br>	
-<img src="" height="120" width="120" alt="">
+<?php echo $this->Form->create('User', array('enctype' => 'multipart/form-data')); ?><br>	
+<?php echo $this->Html->image('upload/' . $profile['image'], array('id' => 'img', 'height' => '120', 'width' => '120')); ?>
 <?php echo $this->Form->input('id', array('value' => $profile['id'], 'readonly')); ?>
-<?php echo $this->Form->file('image'); ?>
+<?php echo $this->Form->file('image', array('type' => 'file','id' => 'file')); ?>
 <br>
 Name: <?php echo $this->Form->input('name', array('class' => 'form-control', 'value' => $profile['name'], 'label' => false)); ?>
-Birthdate: <?php echo $this->Form->date('birthdate', array('class' => 'form-control', 'value' => $profile['birthdate'])); ?>
+Birthdate: <?php echo $this->Form->date('birthdate', array('class' => 'form-control', 'dateFormat' => 'dmY', 'value' => $this->Time->format('d/m/Y',$profile['birthdate']))); ?>
 Gender: 
 <input type="radio" name="data[User][gender]" id="blankRadio1" value="1" <?php if ($profile['gender'] == 1) { echo 'checked = checked' ;} ?> >Male
 <input type="radio" name="data[User][gender]" id="blankRadio1" value="2" <?php if ($profile['gender'] == 2) { echo 'checked = checked' ;} ?> >Female<br>
-
 Hobby:<br>
-<?php echo $this->Form->textarea('hubby', array('value' => $profile['hubby'])); ?><br><br>
+<?php echo $this->Form->textarea('hobby', array('value' => $profile['hobby'], 'class' => 'form-control')); ?><br><br>
 <?php echo $this->Form->button(__('Update Profile'), array('class' => 'btn btn-primary')); ?>
 <?php echo $this->Form->end(); ?>

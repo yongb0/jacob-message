@@ -14,8 +14,9 @@ class UsersController extends AppController {
     }
      
     public function login() {
+         
          $this->layout = 'main';
-         // $this->Html->css('signin');
+
         //if already logged-in, redirect
         if($this->Session->check('Auth.User')){
             $this->redirect(array('action' => 'home'));      
@@ -33,8 +34,7 @@ class UsersController extends AppController {
                 $this->User->validate['name'] = array();
                 $this->User->save($data);
                 $this->Session->setFlash(__('Welcome, '. $this->Auth->user('name'), array('class' => 'bg-warning')));
-                $this->redirect($this->Auth->redirectUrl());
-                // $this->redirect(array('action' => 'home'));
+                $this->redirect(array('action' => 'home'));
             } else {
                $this->Session->setFlash(__('Invalid name or password'));
             }
@@ -42,77 +42,44 @@ class UsersController extends AppController {
     }
 
     public function profile() {
+
         $this->layout = 'main';
         $Profile = $this->User->findById($this->Session->read('Auth.User.id'));
-        $this->set('profile',$Profile['User']);
-        
-        // pr($this->request->data);
-        // if ($this->request->is('post') || $this->request->is('put')) {
-        //     $data = array(
-        //         'id' => $Profile
-        //         );
-        //     // $file = null;
-        //     // $filename = $file['name'];
-        //     // $file_temp_name = $file['tmp_name'];
-        //     // $dir = WWW_ROOT.'img' .DS. 'upload';
-        //     // move_uploaded_file($file_temp_name, $dir.DS.String::uuid().'-'.$filename);
+        $this->set('profile', $Profile['User']);
 
-        //     $dir = WWW_ROOT.'img/upload/';
-        //     $file = $this->request->data['User']['image'];
-        //     $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
-        //     $newFilename = $file['name'];
-        //     $result = move_uploaded_file($file['tmp_name'], $newFilename);
-        //     $this->request->data['User']['image'] = $newFilename;
-        //     $this->request->data['User']['modified_ip'] = $this->request->clientIp();
-        //     $this->request->data['User']['modified'] = date('Y-m-d h:i:s');
-        //     $this->User->save($this->request->data);
-        //     $this->Session->setFlash(__('Profile has been updated.'));
+        if ($this->request->is('post') || $this->request->is('put')) {
+            $data = array(
+                'id' => $Profile
+                );
+            if (!empty($this->request->data['User']['image']['name'])) {
+                $file = $this->request->data['User']['image'];
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                $arr_ext = array('jpg', 'png', 'jpeg');
 
-        $folderToSaveFiles = WWW_ROOT . 'img/users/' ;
-            if(!empty($this->request->data))
-            {
-                //Check if image has been uploaded
-                if(empty($this->request->data['User']['image']))
-                {
-                        $file = $this->request->data['User']['image']; //put the data into a var for easy use
+                if (in_array($ext, $arr_ext)) {
 
-                        //debug( $file );
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/upload/' . $file['name']);
+                    $this->request->data['User']['image'] = $file['name'];
+                    $this->request->data['User']['modified_ip'] = $this->request->clientIp();
+                    // $this->User->save($this->request->data);
+                    if ($this->User->save($this->request->data)) {
+                        $this->Session->setFlash('User updated');
+                        $this->redirect(array('action' => 'profile'));
 
-                        $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                        $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
-                        
-                            $newFilename = $file['name']; // edit/add here as you like your new filename to be.
-                            $result = move_uploaded_file( $file['tmp_name'],$newFilename );
-                            if(empty($file['name'])){
-                                $userData = array(
-                                    'id' => $Profile,
-                                    'name'  =>  $this->data['User']['name'],
-                                    'image' =>  $newFilename,
-                                    'gender'    =>  $this->data['User']['gender'],
-                                    'birthdate' =>  $this->data['User']['birthdate'],
-                                    'hubby' =>  $this->data['User']['hubby'],
-                                ); 
-                            }else{
-                                $userData = array(
-                                    'id' => $Profile,
-                                    'name'  =>  $this->data['User']['name'],
-                                    'gender'    =>  $this->data['User']['gender'],
-                                    'birthdate' =>  $this->data['User']['birthdate'],
-                                    'hubby' =>  $this->data['User']['hubby'],
-                                );
-                            }
-                          $this->User->save($userData);
-                          $this->Session->write('name',$this->data['User']['name']);
-                          $this->Session->setFlash('<div class="alert alert-success"><i class="glyphicon glyphicon-ok"></i> Profile updated successfully.</div>');
+                    }
                 }
-                $this->redirect(array('action' => 'profile'));
+            } else {
+                $this->request->data['User']['modified_ip'] = $this->request->clientIp();
 
-                echo $this->User->validationErrors();
+                    $this->request->data['User']['image'] = '';
+                    // $this->User->save($this->request->data);
+                    if ($this->User->save($this->request->data)) {
+                        $this->Session->setFlash('User updated');
+                        $this->redirect(array('action' => 'profile'));
+                }
+                
             }
-            // $this->redirect(array('action'=>'editProfile'));
-
-
-            
+        }
     }
 
     public function home() {
@@ -140,6 +107,7 @@ class UsersController extends AppController {
  
     public function register() {
 
+        $this->layout = 'main';
         if ($this->request->is('post')) {
             $this->User->create();
             $this->request->data['User']['created_ip'] = $this->request->clientIp();
@@ -151,6 +119,7 @@ class UsersController extends AppController {
             }  
         }
     }
+
 
  
 }

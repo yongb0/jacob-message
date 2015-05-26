@@ -6,8 +6,5 @@
 	        <?php echo $this->Form->input('password', array('class' => 'form-control', 'placeholder' => 'Password')); ?>
 	    	<?php echo $this->Form->button(__('Sign in'), array('class' => 'btn btn-lg btn-primary btn-block')); ?>
 			<?php echo $this->Form->end(); ?>
-			<?php
- echo $this->Html->link( "Add A New User",   array('action'=>'register')); 
-?>
- 	
+			No Account? <?php echo $this->Html->link( "Register",  array('action'=>'register')); ?> 	
 </div>

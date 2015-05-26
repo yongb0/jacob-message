@@ -8,8 +8,11 @@
     </nav>
     <h3 class="text-muted">Home</h3>
 </div>
-
-<img src="<?php echo $this->webroot; ?>img/upload/jake.jpg" height="120" width="120" alt=""><br><br>
+<?php if ($profile['image'] == 0) { ?>
+	<?php echo $this->Html->image('default.png', array('height' => '120', 'width' => '120')); ?><br><br>
+<?php	} else {?>
+<?php echo $this->Html->image('upload/' . $profile['image'], array('height' => '120', 'width' => '120')); ?><br><br>
+<?php } ?>
 <b><?php echo ucfirst($profile['name']); ?></b><br><br>
 Gender: <?php 
 			if ($profile['gender'] == 1) {
@@ -18,14 +21,12 @@ Gender: <?php
 				if ($profile['gender'] == 2) {
 					echo 'Female';
 				} else {
-					echo 'Unspecified';
+					echo '';
 				}
-			}
-
-			
+			}			
 		?><br><br>
-Birthdate: <?php echo $profile['birthdate']; ?><br><br>
-Joined: <?php echo $profile['created']; ?><br><br>
-Last Login: <?php echo $profile['last_login_time']; ?><br><br>
-Hobby: <br><br>
-<p><?php echo $profile['hubby']; ?></p>
+		Birthdate: <?php echo $this->Time->format('M d, Y', $profile['birthdate']); ?><br><br>
+	Joined: <?php echo $this->Time->format('M d, Y', $profile['created']); ?><br><br>
+	Last Login: <?php echo $this->Time->format('M d, Y h:i', $profile['last_login_time']); ?><br><br>
+	Hobby: <br><br>
+<p><?php echo $profile['hobby']; ?></p>
