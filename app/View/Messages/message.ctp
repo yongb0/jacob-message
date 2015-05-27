@@ -1,3 +1,4 @@
+<script type="text/javascript" src="http://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
 <script>
 $(document).ready(function() {
 	$('#delete').click(function() {
@@ -5,6 +6,30 @@ $(document).ready(function() {
 	});
 });
 </script>
+<script>
+    $(document).ready(function() {
+       $("#users").select2({});
+       $("#message_content").shorten({
+	    "showChars" : 10,
+	    "moreText"  : "See More"
+	});
+     });
+
+ //    $(".comment").shorten({
+ //    "showChars" : 5
+	// });
+ 
+ 
+	
+	 
+	// $(".comment").shorten({
+	//     "showChars" : 50,
+	//     "moreText"  : "See More",
+	//     "lessText"  : "Less",
+	// });
+</script>
+
+<?php  //  pr($messages); ?>
 <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right">
@@ -19,27 +44,22 @@ $(document).ready(function() {
 <button><?php echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button>
 <br>
 <hr>
+<hr>
 <?php foreach($messages as $message): ?>
-<?php if ($this->Session->read('Auth.User.id') != $message['Message']['from_id']) { ?>
+<?php if ($message['Message']['from_id'] != $this->Session->read('Auth.User.id')) { ?>
+<?php  ?>
 <div class="alert alert-info" id='message'>
-	<h3>From: <?php echo $this->Html->link($message['Message']['from_id'], array('controller' => 'messages', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h3>
+<?php echo $this->Html->image('upload/' . $message['User']['image'], array('height' => 120, 'width' => 120)); ?>
+	<h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['from_id']) ); ?></h3>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
-	<p><?php echo $message['Message']['content']; ?></p><hr>
+	<p id="message_content"><?php echo $message['Message']['content']; ?></p><hr>
 	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
-	<button id='#message'><?php echo $this->Html->link('View Conversation', array('controller' => 'messages', 'action' => 'conversation', $message['Message']['id'])); ?></button>
-	<p id='delete'>click mes</p>
-	<button onclick='$('#message').fadeOut(300, function());'><?php echo $this->Html->link('Delete', array('controller' => 'messages', 'id' => 'delete', 'action' => 'delete', $message['Message']['id']) ); ?></button>
+	<button id='#message'><?php echo $this->Html->link('View Conversation', array('controller' => 'messages', 'action' => 'conversation', $message['Message']['from_id'])); ?></button>
+	<p id='delete'>click me</p>
 </div>
-<?php } else { ?>
-<div class="alert alert-success from" id='message'>
-	<h2><?php echo $this->Html->link($this->Session->read('Auth.User.name'), array('controller' => 'messages', 'id' => 'delete', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h2>
-	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
-	<p><?php echo $message['Message']['content']; ?></p><hr>
-	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
-	<?php // echo $this->Form->submit('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id'])); ?>	
-	<button onclick='$('#message').fadeOut(300, function());'><?php echo $this->Html->link('Delete', array('controller' => 'messages', 'action' => 'delete', $message['Message']['id'])); ?></button>
-</div>
-<?php } ?>
+	<?php } ?>
+
+<?php  ?>
 <?php 
 	endforeach;
 	unset($message);

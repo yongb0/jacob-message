@@ -4,8 +4,6 @@ App::uses('AppController', 'Controller');
 
 class Message extends AppModel {
 
-	
-
 	public $validate = array(
 		'to_id' => array(
 			'required' => array(
@@ -30,12 +28,13 @@ class Message extends AppModel {
 				'rule' => array('notEmpty'),
 				'message' => 'Must contain date created'
 				)
-			),
-		'modified' => array(
-			'required' => array(
-				'rule' => array('notEmpty'),
-				'message' => 'Must contain modified date'
-				)
+			)
+		);
+
+	public $belongsTo = array(
+		'User' => array(
+			'className' => 'User',
+			'foreignKey' => 'id'
 			)
 		);
 }

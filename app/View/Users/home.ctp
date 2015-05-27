@@ -14,6 +14,7 @@
 <?php echo $this->Html->image('upload/' . $profile['image'], array('height' => '120', 'width' => '120')); ?><br><br>
 <?php } ?>
 <b><?php echo ucfirst($profile['name']); ?></b><br><br>
+<b><?php echo $profile['email']; ?></b><br><br>
 Gender: <?php 
 			if ($profile['gender'] == 1) {
 				echo 'Male';

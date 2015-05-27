@@ -3,6 +3,8 @@ class UsersController extends AppController {
     
     public $components = array('Upload');
 
+    
+
     public $paginate = array(
         'limit' => 25,
         'order' => array('User.name' => 'asc' ) 
@@ -118,6 +120,15 @@ class UsersController extends AppController {
                 $this->Session->setFlash(__('The user could not be created. Please, try again.'));
             }  
         }
+    }
+
+    public function userprofile($id = null) {
+
+        $this->layout = 'main';
+        $users = $this->User->find('all', array(
+                                            'conditions' => array('id = '.$id)
+                                        ));
+        $this->set('users', $users);
     }
 
 

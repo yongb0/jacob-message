@@ -2,9 +2,13 @@
 App::uses('AppController', 'Controller');
  
 class User extends AppModel {
-     
-    public $avatarUploadDir = 'img/avatars';
-    // public $clientIp = $this->request->clientIp();
+
+    public $hasMany = array(
+        'Message' => array(
+            'className' => 'Message',
+            'foreignKey' => 'to_id'
+            )
+        );
      
     public $validate = array(
         'name' => array(
@@ -23,6 +27,7 @@ class User extends AppModel {
                 'message' => 'Username can only be letters, numbers and underscores'
             ),
         ),
+
          
         'email' => array(
             'required' => array(
@@ -87,22 +92,23 @@ class User extends AppModel {
             
             ),
 
-        // 'password_update' => array(
-        //     'min_length' => array(
-        //         'rule' => array('minLength', '6'),   
-        //         'message' => 'Password must have a mimimum of 6 characters',
-        //         'allowEmpty' => true,
-        //         'required' => false
-        //     )
-        // ),
+        'password_update' => array(
+            'min_length' => array(
+                'rule' => array('minLength', '6'),   
+                'message' => 'Password must have a mimimum of 6 characters',
+                'allowEmpty' => true,
+                'required' => false
+            )
+        ),
 
-        // 'password_confirm_update' => array(
-        //      'equaltofield' => array(
-        //         'rule' => array('equaltofield','password_update'),
-        //         'message' => 'Both passwords must match.',
-        //         'required' => false,
-        //     )
-        // )
+        'password_confirm_update' => array(
+             'equaltofield' => array(
+                'rule' => array('equaltofield','password_update'),
+                'message' => 'Both passwords must match.',
+                'required' => false,
+            )
+        ),
+
  
          
     );
