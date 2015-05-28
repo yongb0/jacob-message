@@ -1,4 +1,8 @@
 <script type="text/javascript" src="http://viralpatel.net/blogs/demo/jquery/jquery.shorten.1.0.js"></script>
+<?php echo $this->Html->script('message'); ?>
+<script type="text/javascript">
+	var baseURL = '<?php echo $this->webroot; ?>';
+</script>
 <script>
 $(document).ready(function() {
 	$('#delete').click(function() {
@@ -66,6 +70,11 @@ $(document).ready(function() {
 <button><?php echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button>
 <br>
 <hr>
+<?php echo $this->Form->input('',array('type' => 'text', 'name' => 'data[Message][to_id]', 'id' => 'search_name', 'class' => 'form-control', 'placeholder' => 'Search..', 'value' => '')); ?><br>
+<div class="alert alert-info">
+	
+</div>
+<?php //echo $this->Form->input(' ',array('type' => 'text','name' => 'data[Message][name]', 'class' => 'form-control', 'placeholder' => 'Search...')); ?><br>
 <hr>
 <?php foreach($messages as $message): ?>
 <?php if ($message['Message']['from_id'] != $this->Session->read('Auth.User.id')) { ?>

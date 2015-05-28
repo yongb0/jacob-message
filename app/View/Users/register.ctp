@@ -51,9 +51,8 @@
 	        <?php echo $this->Form->input('name', array('class' => 'form-control', 'id' => 'name'));
 	        echo $this->Form->input('email', array('class' => 'form-control', 'id' => 'email'));
 	        echo $this->Form->input('password', array('class' => 'form-control', 'id' => 'password'));
-	        echo $this->Form->input('password_confirm', array('class' => 'form-control','label' => 'Confirm Password *', 'maxLength' => 255, 'title' => 'Confirm password', 'type'=>'password'));
-	        echo $this->Form->submit('Register', array('class' => 'form-submit',  'title' => 'Click here to add the user')); 
-	?>
+	        echo $this->Form->input('password_confirm', array('class' => 'form-control','label' => 'Confirm Password *', 'maxLength' => 255, 'title' => 'Confirm password', 'type'=>'password')); ?>
+            <br><?php echo $this->Form->submit('Register', array('class' => 'form-submit',  'title' => 'Click here to add the user')); ?>
 	    </fieldset>
 	<?php echo $this->Form->end(); ?>
 </div>
@@ -62,7 +61,10 @@ if ($this->Session->check('Auth.User')) {
 echo $this->Html->link( "Return to Dashboard",   array('action'=>'index') ); 
 echo "<br>";
 echo $this->Html->link( "Logout",   array('action' => 'logout') ); 
-}else{
+}else{ ?>
+
+<br><br>
+<?php
 echo $this->Html->link( "Return to Login Screen",   array('action'=>'login') ); 
 }
 ?>
