@@ -113,7 +113,9 @@ class UsersController extends AppController {
         if ($this->request->is('post')) {
             $this->User->create();
             $this->request->data['User']['created_ip'] = $this->request->clientIp();
+            $this->request->data['User']['image'] = "ssssdefault.png";
             if ($this->User->save($this->request->data)) {
+                pr($this->request->data);
                 $this->Session->setFlash(__('The user has been created'));
                 $this->redirect(array('action' => 'index'));
             } else {

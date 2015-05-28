@@ -14,19 +14,41 @@ $(document).ready(function() {
 	    "moreText"  : "See More"
 	});
      });
-
- //    $(".comment").shorten({
- //    "showChars" : 5
-	// });
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+    var showChar = 100;
+    var ellipsestext = "...";
+    var moretext = "more";
+    var lesstext = "less";
+    $('.more').each(function() {
+        var content = $(this).html();
  
+        if(content.length > showChar) {
  
-	
-	 
-	// $(".comment").shorten({
-	//     "showChars" : 50,
-	//     "moreText"  : "See More",
-	//     "lessText"  : "Less",
-	// });
+            var c = content.substr(0, showChar);
+            var h = content.substr(showChar-1, content.length - showChar);
+ 
+            var html = c + '<span class="moreellipses">' + ellipsestext+ ' </span><span class="morecontent"><span>' + h + '</span>  <a href="" class="morelink">' + moretext + '</a></span>';
+ 
+            $(this).html(html);
+        }
+ 
+    });
+ 
+    $(".morelink").click(function(){
+        if($(this).hasClass("less")) {
+            $(this).removeClass("less");
+            $(this).html(moretext);
+        } else {
+            $(this).addClass("less");
+            $(this).html(lesstext);
+        }
+        $(this).parent().prev().toggle();
+        $(this).prev().toggle();
+        return false;
+    });
+});
 </script>
 
 <?php  //  pr($messages); ?>
@@ -47,7 +69,6 @@ $(document).ready(function() {
 <hr>
 <?php foreach($messages as $message): ?>
 <?php if ($message['Message']['from_id'] != $this->Session->read('Auth.User.id')) { ?>
-<?php  ?>
 <div class="alert alert-info" id='message'>
 <?php echo $this->Html->image('upload/' . $message['User']['image'], array('height' => 120, 'width' => 120)); ?>
 	<h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['from_id']) ); ?></h3>

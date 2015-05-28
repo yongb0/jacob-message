@@ -3,12 +3,12 @@ App::uses('AppController', 'Controller');
  
 class User extends AppModel {
 
-    public $hasMany = array(
-        'Message' => array(
-            'className' => 'Message',
-            'foreignKey' => 'to_id'
-            )
-        );
+    // public $hasMany = array(
+    //     'Message' => array(
+    //         'className' => 'Message',
+    //         'foreignKey' => 'to_id'
+    //         )
+    //     );
      
     public $validate = array(
         'name' => array(
