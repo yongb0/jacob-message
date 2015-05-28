@@ -33,5 +33,14 @@
 		$this->set(compact('messages'));
 
 	}
-	
+	/*	 	SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`, `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`, `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`, `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `db_message`.`messages` AS `Message` LEFT JOIN `db_message`.`users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE status = 1 OR to_id = 2 AND from_id = 2 ORDER BY `Message`.`id` desc LIMIT 5
+*/
+	/*'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`,
+	 	  `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`,
+	 	   `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`,
+	 	    `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `db_message`.`messages` AS `Message` LEFT JOIN
+	 	     `db_message`.`users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE to_id = '.$this->Session->read('Auth.User.id').'
+	 	      OR from_id = '.$this->Session->read('Auth.User.id').' AND
+	 	      status = 1 ORDER BY `Message`.`id` desc LIMIT 5'*/
+
 	?>

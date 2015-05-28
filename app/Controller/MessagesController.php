@@ -2,16 +2,6 @@
 
 class MessagesController extends AppController {
 
-/*	public $belongsTo = array(
-        'User' => array(
-            'className' => 'Message',
-            'foreignKey' => 'id',
-            'conditions' => 'messages.to_id = users.id'
-            )
-        );
-
-*/
-
 	public function index() {
 
 		$this->paginate = array(
@@ -23,33 +13,6 @@ class MessagesController extends AppController {
 		$messages = $this->paginate('Message');
 		$this->set(compact('messages'));
 	}
-
-	// public function message() {
-	// 	$this->loadModel('Message');
-	// 	$this->layout= 'main';
-	// 	$
-	// 	$this->paginate = array(
-	// 			'Message' => array(
-	// 				'joins' => array(
-	// 							'table' => 'users',
-	// 							'alias' => 'User',
-	// 							'type' => 'left',
-	// 							'conditions' => array('Message.to_id = User.id'),
-	// 							),
-					
-	// 				),
-				
-	// 			'limit' => 5,
-	// 			'order' => array('Message.id' => 'desc'),
-	// 			'conditions' => array('to_id = '.$this->Session->read('Auth.User.id').' OR from_id = ' .$this->Session->read('Auth.User.id'). ' AND  status = 1')
-	// 		);
-	// 	// $messages = $this->Message->find('all');
-	// 	// $this->set('messages', $messages);
-
-	// 	$messages = $this->paginate('Message');
-	// 	$this->set('messages', $messages);
-
-	// }
 
 	public  function message() {
 		$this->layout = 'main';
@@ -68,28 +31,22 @@ class MessagesController extends AppController {
 
 	 public function conversation($id = null) {
 
-/*	 	SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`, `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`, `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`, `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `db_message`.`messages` AS `Message` LEFT JOIN `db_message`.`users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE status = 1 OR to_id = 2 AND from_id = 2 ORDER BY `Message`.`id` desc LIMIT 5
-*/
+
 	 	$this->layout = 'main';
   		$db = ClassRegistry::init('Message')->getDataSource();
   		$data = $db->fetchAll(
-	 	 /*'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`,
-	 	  `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`,
-	 	   `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`,
-	 	    `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `db_message`.`messages` AS `Message` LEFT JOIN
-	 	     `db_message`.`users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE to_id = '.$this->Session->read('Auth.User.id').'
-	 	      OR from_id = '.$this->Session->read('Auth.User.id').' AND
-	 	      status = 1 ORDER BY `Message`.`id` desc LIMIT 5'*/
-	 	      'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`, `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`, `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`, `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `db_message`.`messages` AS `Message` LEFT JOIN `db_message`.`users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE status = 1 OR to_id = 2 AND from_id = 2 ORDER BY `Message`.`id` desc LIMIT 5'
+	 	 
+		 	      'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`, 
+		 	      `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`, 
+		 	      `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`, 
+		 	      `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `db_message`.`messages` AS `Message` LEFT JOIN
+		 	       `db_message`.`users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE status = 1 OR to_id = 2 AND 
+		 	       from_id = 2 ORDER BY `Message`.`id` desc LIMIT 5'
 	 	       );
 	  
 	  	$this->set('messages', $data);
 
 	 }
-
-
-	
-
 
 	public function createmessage() {
 
@@ -108,17 +65,17 @@ class MessagesController extends AppController {
 		if ($this->request->data['Message']['to_id'] == 0 OR $this->request->data['Message']['to_id'] == '') {
 			$this->Session->setFlash(__('<div class="alert alert-danger">Receiver is required!</div>'));
 			$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
-		} else {
-			if ($this->request->is('post')) {
-				$this->request->data['Message']['from_id'] = $from;
-				$this->request->data['Message']['status'] = 1;
-				$this->Message->create();
-				if ($this->Message->save($this->request->data)) {
-					$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
-					$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
+			} else {
+				if ($this->request->is('post')) {
+					$this->request->data['Message']['from_id'] = $from;
+					$this->request->data['Message']['status'] = 1;
+					$this->Message->create();
+					if ($this->Message->save($this->request->data)) {
+						$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
+						$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
+					}
 				}
 			}
-		}
 	}
 
 	public function reply() {
@@ -131,17 +88,17 @@ class MessagesController extends AppController {
 		if ($this->request->is('post')) {
 			// pr($this->request->data);
 			if ($this->request->data['Message']['to_id'] == $userid) {
-				$this->Session->setFlash('<div class="alert alert-danger">Message sending error!</div>');
-				$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['Message']['to_id']));
-			} else {
-			$this->Message->create();
-			if ($this->Message->save($this->request->data)) {
-				$this->Session->setFlash('<div class="alert alert-warning">Message sent!</div>');
-				$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $id));
-			} else {
-				$this->Session->setFlash('<div class="alert alert-danger">Message sending failed!</div>');
+					$this->Session->setFlash('<div class="alert alert-danger">Message sending error!</div>');
+					$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['Message']['to_id']));
+				} else {
+				$this->Message->create();
+				if ($this->Message->save($this->request->data)) {
+					$this->Session->setFlash('<div class="alert alert-warning">Message sent!</div>');
+					$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $id));
+				} else {
+					$this->Session->setFlash('<div class="alert alert-danger">Message sending failed!</div>');
+				}
 			}
-		}
 		}
 		
 	}
@@ -172,13 +129,9 @@ class MessagesController extends AppController {
 			foreach($users as $user) {
 
 				$array[] = array('<img src="/jacob-message/img/upload/' . $user["User"]["image"] . '"/>');
-				
+				echo $array;
 			}
-
-			echo json_encode($array);
 		}
-
-
 	}
 
 

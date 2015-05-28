@@ -3,17 +3,13 @@
 <script type="text/javascript">
 	var baseURL = '<?php echo $this->webroot; ?>';
 </script>
-<script>
-$(document).ready(function() {
-	$('#delete').click(function() {
-	$('#message').fadeOut('slow');
-	});
-});
-</script>
+
 <script>
     $(document).ready(function() {
-       $("#users").select2({});
-       $("#message_content").shorten({
+        $('#delete').click(function() {
+        $('#message').fadeOut('slow');
+        $("#users").select2({});
+        $("#message_content").shorten({
 	    "showChars" : 10,
 	    "moreText"  : "See More"
 	});

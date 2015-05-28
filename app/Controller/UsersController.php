@@ -2,13 +2,6 @@
 class UsersController extends AppController {
     
     public $components = array('Upload');
-
-    
-
-    public $paginate = array(
-        'limit' => 25,
-        'order' => array('User.name' => 'asc' ) 
-    );
   
     public function beforeFilter() {
         parent::beforeFilter();
@@ -67,7 +60,6 @@ class UsersController extends AppController {
                     if ($this->User->save($this->request->data)) {
                         $this->Session->setFlash('User updated');
                         $this->redirect(array('action' => 'profile'));
-
                     }
                 }
             } else {
@@ -132,8 +124,6 @@ class UsersController extends AppController {
                                         ));
         $this->set('users', $users);
     }
-
-
  
 }
 
