@@ -143,8 +143,8 @@ class UsersController extends AppController {
                                             'conditions' => array('id = '.$id)
                                         ));
         $this->set('users', $users);
-    }
- 
+    }                                   
+
 }
 
 ?>

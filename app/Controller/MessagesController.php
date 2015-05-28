@@ -2,6 +2,7 @@
 
 class MessagesController extends AppController {
 
+
 	public function index() {
 
 		$this->paginate = array(
@@ -13,6 +14,7 @@ class MessagesController extends AppController {
 		$messages = $this->paginate('Message');
 		$this->set(compact('messages'));
 	}
+
 
 	public  function message() {
 		$this->layout = 'main';
@@ -29,8 +31,8 @@ class MessagesController extends AppController {
 	  	$this->set('messages', $data);
 	 }
 
-	 public function conversation($id = null) {
 
+	 public function conversation($id = null) {
 
 	 	$this->layout = 'main';
   		$db = ClassRegistry::init('Message')->getDataSource();
@@ -48,6 +50,7 @@ class MessagesController extends AppController {
 
 	 }
 
+
 	public function createmessage() {
 
 		$this->layout = 'main';
@@ -56,6 +59,7 @@ class MessagesController extends AppController {
 		$this->set('users', $Users);
 
 	}
+
 
 	public function send() {
 
@@ -148,6 +152,7 @@ class MessagesController extends AppController {
 			$this->redirect(array('action' => 'conversation/' . $id));
 		}
 	}
+	
 
 	public function search() {
 

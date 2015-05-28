@@ -26,4 +26,24 @@ public function message() {
 		$this->set('messages', $messages);
 
 	}
+
+	public function user() {
+
+		$this->paginate = array(
+	    'conditions' => array('User.id' => $this->Auth->user('id')),
+	    'joins' => array(
+	        array(
+	            'alias' => 'User',
+	            'table' => 'users',
+	            'type' => 'INNER',
+	            'conditions' => '`User`.`id` = `Widget`.`user_id`'
+	        )
+	    ),
+	    'limit' => 20,
+	    'order' => array(
+	        'created' => 'desc'
+		    )
+		);
+		$this->set( 'widgets', $this->paginate( $this->Widget ) );
+	}
 ?>
