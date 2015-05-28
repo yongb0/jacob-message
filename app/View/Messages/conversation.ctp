@@ -1,11 +1,27 @@
 <?php // pr($messages); ?>
 <script type="text/javascript">
-	var baseURL = '<?php echo $this->webroot; ?>';
+	
 	$(document).ready(function() {
-		$.post(baseURL + 'conversation', {id : $('#action').val(), content: $('#content').val()}, function(data) {
-			alert('message sent')
-		} )
-	});	
+		$("#action").submit(function(){
+			var to = $("#from_id").val();
+			var content = $("#content").val();
+			var action = $("#action")[0].action;
+			var data = {
+				to : to,
+				content : content
+			};
+
+			if (content.length == 0 && to.length == 0) {
+				alert('must contain!');
+			} else {
+				// $.post(action, data, function(data) {
+					alert('sent!');
+				});
+
+			}
+
+		});
+	});
 
 
 
@@ -46,7 +62,7 @@
 	<div class='float-left'>
 		<?php echo $this->Html->image('upload/' . $message['User']['image'], array('id' => 'img', 'height' => '120', 'width' => '120')); ?><br>
 	</div>
-	<h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'messages', 'action' => 'conversation', $this->Session->read('Auth.User.id')) ); ?></h3>
+	<h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['User']['id']) ); ?></h3>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
 	<p><?php echo $message['Message']['content']; ?></p><hr>
 	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>

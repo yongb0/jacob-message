@@ -78,6 +78,23 @@ class MessagesController extends AppController {
 			}
 	}
 
+	// public function send() {
+	// 	$this->autoRender = false;
+
+	// 	$data = array(
+	// 			'to_id' => $this->request->data['to'],
+	// 			'content' => $this->request->data['msg'],
+	// 			'from_id' => $this->Session->read('Auth.User.id'),
+	// 			'status' => 1				
+	// 		);
+
+	// 	if ($this->Message->save($data)) {
+	// 		echo 'sent';
+	// 	}
+
+	// }
+
+
 	public function reply() {
 		
 		$this->autoRender = false;
@@ -102,6 +119,25 @@ class MessagesController extends AppController {
 		}
 		
 	}
+
+
+	// public function reply() {
+	// 	$this->autoRender = false;
+
+	// 	$data = array(
+	// 		'to_id' => $this->request->data['to'],
+	// 		'from_id' => $this->Session->read('Auth.Session.id'),
+	// 		'content' => $this->request->data['content'],
+	// 		'status' => 1
+	// 		);
+
+	// 	if ($this->Message->save($data)) {
+	// 		echo 'success!';
+	// 		return false;
+	// 		// $this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['to']));
+	// 	}
+	// }
+
 	
 
 	public function delete($id = null) {
