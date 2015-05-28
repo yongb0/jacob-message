@@ -99,16 +99,36 @@ class UsersController extends AppController {
         $this->set(compact('users'));
     }
  
+    // public function register() {
+
+    //     $this->layout = 'main';
+    //     if ($this->request->is('post')) {
+    //         $this->User->create();
+    //         $this->request->data['User']['created_ip'] = $this->request->clientIp();
+    //         $this->request->data['User']['image'] = "default.png";
+    //         if ($this->User->save($this->request->data)) {
+    //             pr($this->request->data);
+    //             $this->Session->setFlash(__('The user has been created'));
+    //             $this->redirect(array('action' => 'index'));
+    //         } else {
+    //             $this->Session->setFlash(__('The user could not be created. Please, try again.'));
+    //         }  
+    //     }
+    // }
+
     public function register() {
 
         $this->layout = 'main';
         if ($this->request->is('post')) {
             $this->User->create();
             $this->request->data['User']['created_ip'] = $this->request->clientIp();
-            $this->request->data['User']['image'] = "ssssdefault.png";
+            $this->request->data['User']['image'] = "default.png";
             if ($this->User->save($this->request->data)) {
-                pr($this->request->data);
+                // pr($this->request->data);
                 $this->Session->setFlash(__('The user has been created'));
+                if ($this->Auth->login()) {
+                    $this->redirect(array('controller' => 'users', 'action' => 'home'));
+                }
                 $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The user could not be created. Please, try again.'));
