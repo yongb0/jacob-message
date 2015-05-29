@@ -133,27 +133,6 @@ class MessagesController extends AppController {
 		
 	}
 
-
-	// public function reply() {
-
-	// 	$this->autoRender = false;
-
-	// 	if ($this->request->is('post')) {
-	// 		$data = array(
-	// 			'to_id' => $this->request->data['to'],
-	// 			'from_id' => $this->Session->read('Auth.Session.id'),
-	// 			'content' => $this->request->data['content'],
-	// 			'status' => 1
-	// 			);
-	// 			$this->Message->create();
-	// 		if ($this->Message->save($data)) {
-	// 			echo 'success!';
-				
-	// 			$this->redirect(array('controller' => 'messages', 'action' => 'conversation/' .  $this->request->data['to']));
-	// 		}
-	// 	}
-	// }
-
 	
 
 	public function delete($id = null) {

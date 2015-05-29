@@ -5,20 +5,23 @@
 		$("#action").submit(function(){
 			var to = $("#from_id").val();
 			var content = $("#content").val();
+			var from = $("#from").val();
 			var action = $("#action")[0].action;
 			var data = {
 				to : to,
 				content : content
+				from : from
 			};
 
 			if (content.length == 0 && to.length == 0) {
 				alert('must contain!');
 			} else {
-				// $.post(action, data, function(data) {
-					alert('sent!')
-				}
+				$.post(action, data, function(data) {
+					alert(data);
+				});
 
-			
+			}
+			return false;
 
 		});
 	});
@@ -50,6 +53,7 @@
 
 <?php endforeach; ?>
 <?php echo $this->Form->create('', array('controller' => 'messages', 'action' => 'reply' , 'id' => 'action'  )); ?>
+<?php echo $this->Form->hidden('', array('value' => $this->Session->read('Auth.User.id'), 'id' => 'from', 'name' => 'data[Message][from_id]')); ?>
 <?php echo $this->Form->hidden('', array('value' => $message['Message']['from_id'], 'name' => 'data[Message][to_id]','id' => 'from_id')); ?>
 <?php echo $this->Form->textarea('content', array('class' => 'form-control','id' => 'content', 'placeholder' => 'Reply..')); ?>
 <?php echo $this->Form->button(__('Send'), array('class' => 'btn btn-primary')); ?>
