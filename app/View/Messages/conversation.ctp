@@ -52,8 +52,7 @@
 <?php foreach ($messages as $message) : ?>
 
 <?php endforeach; ?>
-<?php echo $this->Form->create('', array('controller' => 'messages', 'action' => 'reply' , 'id' => 'action'  )); ?>
-<?php echo $this->Form->hidden('', array('value' => $this->Session->read('Auth.User.id'), 'id' => 'from', 'name' => 'data[Message][from_id]')); ?>
+<?php echo $this->Form->create('', array('controller' => 'messages', 'action' => 'reply/' .$message['Message']['from_id']  , 'id' => 'action'  )); ?>
 <?php echo $this->Form->hidden('', array('value' => $message['Message']['from_id'], 'name' => 'data[Message][to_id]','id' => 'from_id')); ?>
 <?php echo $this->Form->textarea('content', array('class' => 'form-control','id' => 'content', 'placeholder' => 'Reply..')); ?>
 <?php echo $this->Form->button(__('Send'), array('class' => 'btn btn-primary')); ?>

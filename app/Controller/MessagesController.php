@@ -28,11 +28,11 @@ class MessagesController extends AppController {
 	 	      status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 5'
 	  		);
 
+	  	$this->set('messages', $data);
+
 		$this->loadModel('User');
 		$Users = $this->User->find('all');
-
 		$this->set('users', $Users);
-	  	$this->set('messages', $data);
 	 }
 
 
@@ -46,8 +46,8 @@ class MessagesController extends AppController {
 		 	      `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`, 
 		 	      `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`, 
 		 	      `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `messages` AS `Message` LEFT JOIN
-		 	       `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE status = 1 OR to_id = 2 AND 
-		 	       from_id = 2 ORDER BY `Message`.`id` desc LIMIT 5'
+		 	       `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE status = 1 OR to_id = '.$this->Session->read('Auth.User.id').' AND 
+		 	       from_id = '.$this->Session->read('Auth.User.id').' ORDER BY `Message`.`id` desc LIMIT 10'
 	 	       );
 	  
 	  	$this->set('messages', $data);
@@ -86,27 +86,6 @@ class MessagesController extends AppController {
 			}
 	}
 
-	// public function send() {
-	// 	$this->autoRender = false;
-
-	// 		if ($this->request->is('post')) {
-	// 		$data = array(
-	// 				'to_id' => $this->request->data['to'],
-	// 				'content' => $this->request->data['msg'],
-	// 				'from_id' => $this->Session->read('Auth.User.id'),
-	// 				'status' => 1				
-	// 			);
-
-	// 		if ($this->Message->save($data)) {
-	// 			// echo 'sent';
-	// 			$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
-	// 			$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
-
-	// 		}
-	// 	}
-
-	// }
-
 
 	public function reply() {
 		
@@ -118,7 +97,7 @@ class MessagesController extends AppController {
 		if ($this->request->is('post')) {
 			// pr($this->request->data);
 			if ($this->request->data['Message']['to_id'] == $userid) {
-					$this->Session->setFlash('<div class="alert alert-danger">Message sending error!</div>');
+					$this->Session->setFlash('<div class="alert alert-danger">cant send to you</div>');
 					$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['Message']['to_id']));
 				} else {
 				$this->Message->create();
@@ -130,11 +109,38 @@ class MessagesController extends AppController {
 				}
 			}
 		}
-		
 	}
+		
+	// }
+
+	// public function reply() {
+
+	// 	$this->autoRender = false;
+	// 	$this->loadModel('User');
+	// 	$userid = $this->Session->read('Auth.User.id');
+
+	// 	if ($this->request->is('post')) {
+	// 		$this->request->data['Message']['status'] = 1;
+	// 		$this->request->data['Message']['from_id'] = $userid;
+	// 		$this->Message->create();
+
+	// 		if ($this->request->data['Message']['to_id'] == $userid) {
+
+	// 			$this->Session->setFlash(__('dli pwd mo send sa imong kaugalingon!'));
+	// 			$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['Message']['to_id']));
+	// 		} else {
+
+
+	// 				if ($this->Message->save($this->request->data)) {
+	// 					$this->Session->setFlash(__('message sent!'));
+	// 					$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['Message']['to_id']));
+	// 				}
+	// 		}
+	// 	}
+
+	// }
 
 	
-
 	public function delete($id = null) {
 
 		$this->Message->id = $id;
@@ -144,38 +150,6 @@ class MessagesController extends AppController {
 		}
 	}
 	
-
-	// public function search() {
-
-	// 	$this->autoRender = false;
-	// 	if ($this->request->is('ajax')) {
-	// 		$search = $this->request->data['search'];
-	// 		$this->loadModel('User');
-	// 		$users = $this->User->find('all',array(
-	// 											"conditions" => array(
-	// 												"name LIKE '%" . $search . "%' AND to_id = ".$this->Session->read('Auth.User.id')
-	// 												)
-	// 											)
-	// 									);
-			
-	// 		foreach($users as $user) {
-
-	// 			$array[] = array('<img src="/jacob-message/img/upload/' . $user["User"]["image"] . '"/>');
-	// 			echo $array;
-	// 		}
-	// 	}
-	// }
-
-	// public function search() {
-
-	// 	$this->layout = 'main';
-
-	// 	if ($this->request->is('post')) {
-
-	// 		$k = $this->request->data['']
-	// 	}
-	// }
-
 
 }
 
