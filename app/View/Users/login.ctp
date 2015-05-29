@@ -1,3 +1,4 @@
+<?php echo $this->Html->script('bootstrap.min'); ?>
 <script>
   
   // When the browser is ready...
