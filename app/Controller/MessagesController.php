@@ -46,8 +46,8 @@ class MessagesController extends AppController {
 		 	      `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`, 
 		 	      `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`, 
 		 	      `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `messages` AS `Message` LEFT JOIN
-		 	       `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE status = 1 OR to_id = '.$this->Session->read('Auth.User.id').' AND 
-		 	       from_id = '.$this->Session->read('Auth.User.id').' ORDER BY `Message`.`id` desc LIMIT 10'
+		 	       `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE (to_id = '.$this->Session->read('Auth.User.id').' AND from_id = '.$id.') OR (to_id = '.$id.' AND from_id = '.$this->Session->read('Auth.User.id').')  
+		 	       AND status = 1 ORDER BY `Message`.`id` desc LIMIT 10'
 	 	       );
 	  
 	  	$this->set('messages', $data);
