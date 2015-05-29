@@ -27,7 +27,11 @@ class MessagesController extends AppController {
 	 	     `db_message`.`users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
 	 	      status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 5'
 	  		);
+  		
+		// $this->loadModel('User');
+		// $Users = $this->User->find('all');
 
+		// $this->set('users', $Users);
 	  	$this->set('messages', $data);
 	 }
 
@@ -61,47 +65,47 @@ class MessagesController extends AppController {
 	}
 
 
-	// public function send() {
-
-	// 	$this->autoRender = false;
-		
-	// 	$from = $this->Session->read('Auth.User.id');
-	// 	if ($this->request->data['Message']['to_id'] == 0 OR $this->request->data['Message']['to_id'] == '') {
-	// 		$this->Session->setFlash(__('<div class="alert alert-danger">Receiver is required!</div>'));
-	// 		$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
-	// 		} else {
-	// 			if ($this->request->is('post')) {
-	// 				$this->request->data['Message']['from_id'] = $from;
-	// 				$this->request->data['Message']['status'] = 1;
-	// 				$this->Message->create();
-	// 				if ($this->Message->save($this->request->data)) {
-	// 					$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
-	// 					$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
-	// 				}
-	// 			}
-	// 		}
-	// }
-
 	public function send() {
+
 		$this->autoRender = false;
-
-			if ($this->request->is('post')) {
-			$data = array(
-					'to_id' => $this->request->data['to'],
-					'content' => $this->request->data['msg'],
-					'from_id' => $this->Session->read('Auth.User.id'),
-					'status' => 1				
-				);
-
-			if ($this->Message->save($data)) {
-				// echo 'sent';
-				$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
-				$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
-
+		
+		$from = $this->Session->read('Auth.User.id');
+		if ($this->request->data['Message']['to_id'] == 0 OR $this->request->data['Message']['to_id'] == '') {
+			$this->Session->setFlash(__('<div class="alert alert-danger">Receiver is required!</div>'));
+			$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
+			} else {
+				if ($this->request->is('post')) {
+					$this->request->data['Message']['from_id'] = $from;
+					$this->request->data['Message']['status'] = 1;
+					$this->Message->create();
+					if ($this->Message->save($this->request->data)) {
+						$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
+						$this->redirect(array('controller' => 'messages', 'action' => 'message'));
+					}
+				}
 			}
-		}
-
 	}
+
+	// public function send() {
+	// 	$this->autoRender = false;
+
+	// 		if ($this->request->is('post')) {
+	// 		$data = array(
+	// 				'to_id' => $this->request->data['to'],
+	// 				'content' => $this->request->data['msg'],
+	// 				'from_id' => $this->Session->read('Auth.User.id'),
+	// 				'status' => 1				
+	// 			);
+
+	// 		if ($this->Message->save($data)) {
+	// 			// echo 'sent';
+	// 			$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
+	// 			$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
+
+	// 		}
+	// 	}
+
+	// }
 
 
 	// public function reply() {
