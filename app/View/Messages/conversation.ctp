@@ -48,12 +48,10 @@
     </nav>
     <h3 class="text-muted"><?php echo $this->Html->link('Home', array('controller' => 'users', 'action' => 'home')); ?></h3>
 </div>
-
-<?php foreach ($messages as $message) : ?>
-
-<?php endforeach; ?>
-<?php echo $this->Form->create('', array('controller' => 'messages', 'action' => 'reply/' .$message['Message']['from_id']  , 'id' => 'action'  )); ?>
-<?php echo $this->Form->hidden('', array('value' => $message['Message']['from_id'], 'name' => 'data[Message][to_id]','id' => 'from_id')); ?>
+<?php $url = $this->params['pass']; ?>
+<?php foreach($url as $u) : endforeach; ?>
+<?php echo $this->Form->create('', array('controller' => 'messages', 'action' => 'reply', 'id' => 'action'  )); ?>
+<?php echo $this->Form->hidden('', array('value' => $u, 'name' => 'data[Message][to_id]','id' => 'from_id')); ?>
 <?php echo $this->Form->textarea('content', array('class' => 'form-control','id' => 'content', 'placeholder' => 'Reply..')); ?>
 <?php echo $this->Form->button(__('Send'), array('class' => 'btn btn-primary')); ?>
 <?php echo $this->Form->end(); ?>
