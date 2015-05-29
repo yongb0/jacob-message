@@ -1,7 +1,5 @@
-<script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
-  
-  <!-- jQuery Form Validation code -->
-  <script>
+<!-- jQuery Form Validation code -->
+<script>
   
   // When the browser is ready...
   $(document).ready(function() {
@@ -42,7 +40,8 @@
 
   });
   
-  </script>
+</script>
+
 <div class="users form">
  
 	<?php echo $this->Form->create('User', array('id' => 'register-form'));?>

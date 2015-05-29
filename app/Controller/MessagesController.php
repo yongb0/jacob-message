@@ -99,48 +99,50 @@ class MessagesController extends AppController {
 	// }
 
 
-	public function reply() {
+	// public function reply() {
 		
+	// 	$this->autoRender = false;
+	// 	$this->loadModel('User');
+	// 	$userid = $this->Session->read('Auth.User.id');
+	// 	$this->request->data['Message']['from_id'] = $userid;
+	// 	$this->request->data['Message']['status'] = 1;
+	// 	if ($this->request->is('post')) {
+	// 		// pr($this->request->data);
+	// 		if ($this->request->data['Message']['to_id'] == $userid) {
+	// 				$this->Session->setFlash('<div class="alert alert-danger">Message sending error!</div>');
+	// 				$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['Message']['to_id']));
+	// 			} else {
+	// 			$this->Message->create();
+	// 			if ($this->Message->save($this->request->data)) {
+	// 				$this->Session->setFlash('<div class="alert alert-warning">Message sent!</div>');
+	// 				$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $id));
+	// 			} else {
+	// 				$this->Session->setFlash('<div class="alert alert-danger">Message sending failed!</div>');
+	// 			}
+	// 		}
+	// 	}
+		
+	// }
+
+
+	public function reply() {
 		$this->autoRender = false;
-		$this->loadModel('User');
-		$userid = $this->Session->read('Auth.User.id');
-		$this->request->data['Message']['from_id'] = $userid;
-		$this->request->data['Message']['status'] = 1;
-		if ($this->request->is('post')) {
-			// pr($this->request->data);
-			if ($this->request->data['Message']['to_id'] == $userid) {
-					$this->Session->setFlash('<div class="alert alert-danger">Message sending error!</div>');
-					$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['Message']['to_id']));
-				} else {
-				$this->Message->create();
-				if ($this->Message->save($this->request->data)) {
-					$this->Session->setFlash('<div class="alert alert-warning">Message sent!</div>');
-					$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $id));
-				} else {
-					$this->Session->setFlash('<div class="alert alert-danger">Message sending failed!</div>');
-				}
+
+		if ($this->request->is('ajax')) {
+			$data = array(
+				'to_id' => $this->request->data['to'],
+				'from_id' => $this->Session->read('Auth.Session.id'),
+				'content' => $this->request->data['content'],
+				'status' => 1
+				);
+
+			if ($this->Message->save($data)) {
+				echo 'success!';
+				return false;
+				// $this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['to']));
 			}
 		}
-		
 	}
-
-
-	// public function reply() {
-	// 	$this->autoRender = false;
-
-	// 	$data = array(
-	// 		'to_id' => $this->request->data['to'],
-	// 		'from_id' => $this->Session->read('Auth.Session.id'),
-	// 		'content' => $this->request->data['content'],
-	// 		'status' => 1
-	// 		);
-
-	// 	if ($this->Message->save($data)) {
-	// 		echo 'success!';
-	// 		return false;
-	// 		// $this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['to']));
-	// 	}
-	// }
 
 	
 

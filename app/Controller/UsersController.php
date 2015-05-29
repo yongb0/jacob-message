@@ -28,10 +28,10 @@ class UsersController extends AppController {
                     ) ;
                 $this->User->validate['name'] = array();
                 $this->User->save($data);
-                $this->Session->setFlash(__('Welcome, '. $this->Auth->user('name'), array('class' => 'bg-warning')));
+                $this->Session->setFlash(__('<div class="alert alert-warning">Welcome, '. $this->Auth->user('name'), array('class' => 'bg-warning')) . '</div>');
                 $this->redirect(array('controller' => 'users', 'action' => 'home'));
             } else {
-               $this->Session->setFlash(__('Invalid name or password'));
+               $this->Session->setFlash(__('<div class="alert alert-danger">Invalid name or password</div>'));
             }
         } 
     }
@@ -117,21 +117,24 @@ class UsersController extends AppController {
     // }
 
     public function register() {
-
-        $this->layout = 'main';
+        $this->autoRender = false;
+        // $this->layout = 'main';
         if ($this->request->is('post')) {
             $this->User->create();
+            $this->request->data['User']['id'] = array();
             $this->request->data['User']['created_ip'] = $this->request->clientIp();
             $this->request->data['User']['image'] = "default.png";
             if ($this->User->save($this->request->data)) {
                 // pr($this->request->data);
-                $this->Session->setFlash(__('The user has been created'));
+                
                 if ($this->Auth->login()) {
+                    $this->Session->setFlash(__('<div class="alert alert-warning">Welcome ' . ucwords($this->Session->read('Auth.User.name')) . ' </div>'));
                     $this->redirect(array('controller' => 'users', 'action' => 'home'));
                 }
                 $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The user could not be created. Please, try again.'));
+                $this->Session->setFlash(__('<div class="alert alert-danger">The user could not be created. Please, try again.</div>'));
+                $this->redirect(array('controller' => 'users', 'action' => 'login'));
             }  
         }
     }

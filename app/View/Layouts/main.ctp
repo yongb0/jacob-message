@@ -30,7 +30,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css(array('bootstrap.min', 'signin', 'jumbotron-narrow'));
-		echo $this->Html->script(array('jquery.min', 'select2.min'));
+		echo $this->Html->script(array('jquery.min', 'bootstrap.min', 'select2.min', 'jquery.shorten.1.0', 'jquery.validate.min'));
+		// echo $this->Html->script(array('jquery.min', 'bootstrap.min'));
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
