@@ -59,9 +59,7 @@
 <?php foreach($messages as $message): ?>
 <?php if ($this->Session->read('Auth.User.id') != $message['Message']['from_id']) { ?>
 <div class="alert alert-info">
-	<div class='float-left'>
 		<?php echo $this->Html->image('upload/' . $message['User']['image'], array('id' => 'img', 'height' => '120', 'width' => '120')); ?><br>
-	</div>
 	<h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['User']['id']) ); ?></h3>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
 	<p><?php echo $message['Message']['content']; ?></p><hr>
