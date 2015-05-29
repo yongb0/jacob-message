@@ -28,10 +28,10 @@ class MessagesController extends AppController {
 	 	      status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 5'
 	  		);
   		
-		// $this->loadModel('User');
-		// $Users = $this->User->find('all');
+		$this->loadModel('User');
+		$Users = $this->User->find('all');
 
-		// $this->set('users', $Users);
+		$this->set('users', $Users);
 	  	$this->set('messages', $data);
 	 }
 
