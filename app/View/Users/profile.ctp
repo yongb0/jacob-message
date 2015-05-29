@@ -41,7 +41,7 @@ Gender:
 Hobby:<br>
 <?php echo $this->Form->textarea('hobby', array('value' => $profile['hobby'], 'class' => 'form-control')); ?><br>
 <?php echo $this->Form->input('email', array('value' => $profile['email'], 'class' => 'form-control')); ?><br>
-<?php echo $this->Form->input('password_update', array('class' => 'form-control', 'type' => 'password')); ?><br>
-<?php echo $this->Form->input('password_confirm_update', array('class' => 'form-control', 'type' => 'password')); ?><br>
+<?php echo $this->Form->input('password_update', array('class' => 'form-control', 'type' => 'password', 'required' => 'false')); ?><br>
+<?php echo $this->Form->input('password_confirm_update', array('class' => 'form-control', 'type' => 'password', 'required' => 'false')); ?><br>
 <?php echo $this->Form->button(__('Update Profile'), array('class' => 'btn btn-primary')); ?>
 <?php echo $this->Form->end(); ?>

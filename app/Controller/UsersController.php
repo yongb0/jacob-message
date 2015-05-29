@@ -65,7 +65,7 @@ class UsersController extends AppController {
             } else {
                 $this->request->data['User']['modified_ip'] = $this->request->clientIp();
 
-                    $this->request->data['User']['image'] = '';
+                    $this->request->data['User']['image'] = $this->Session->read('Auth.User.image');
                     // $this->User->save($this->request->data);
                     if ($this->User->save($this->request->data)) {
                         $this->Session->setFlash('User updated');
