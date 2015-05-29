@@ -73,7 +73,7 @@
 <?php } else { ?>
 <div class="alert alert-success from">
 	<div class='float-left'>
-		<?php echo $this->Html->image('upload/' . $this->Session->read('Auth.User.image'), array('id' => 'img', 'height' => '120', 'width' => '120')); ?><br>
+		<?php echo $this->Html->image('upload/' . $message['User']['image'], array('id' => 'img', 'height' => '120', 'width' => '120')); ?><br>
 	</div>
 	<a href=""><h4><?php //echo  $message['Message']['from_id']; ?></h4></a>
 	<p><?php echo $message['Message']['content']; ?></p><hr>

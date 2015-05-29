@@ -63,8 +63,15 @@ class UsersController extends AppController {
                     }
                 }
             } else {
+
+                $users = $this->User->find('all', array(
+                        'conditions' => array('id' => $this->Session->read('Auth.User.id'))
+                    ));
+                foreach ($users as $user) {
+
+                }
                 $this->request->data['User']['modified_ip'] = $this->request->clientIp();
-                    $this->request->data['User']['image'] = $this->Session->read('Auth.User.image');
+                    $this->request->data['User']['image'] = $user['User']['image'];
                     // $this->User->save($this->request->data);
                     if ($this->User->save($this->request->data)) {
                         $this->Session->setFlash('<div class="alert alert-warning">User updated</div>');
