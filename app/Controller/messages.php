@@ -27,6 +27,7 @@ public function message() {
 
 	}
 
+	// sample syntax for joining!
 	public function user() {
 
 		$this->paginate = array(

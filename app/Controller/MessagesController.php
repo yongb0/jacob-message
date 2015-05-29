@@ -27,7 +27,7 @@ class MessagesController extends AppController {
 	 	     `db_message`.`users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
 	 	      status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 5'
 	  		);
-  		
+
 		$this->loadModel('User');
 		$Users = $this->User->find('all');
 
@@ -165,27 +165,31 @@ class MessagesController extends AppController {
 	}
 	
 
+	// public function search() {
+
+	// 	$this->autoRender = false;
+	// 	if ($this->request->is('ajax')) {
+	// 		$search = $this->request->data['search'];
+	// 		$this->loadModel('User');
+	// 		$users = $this->User->find('all',array(
+	// 											"conditions" => array(
+	// 												"name LIKE '%" . $search . "%' AND to_id = ".$this->Session->read('Auth.User.id')
+	// 												)
+	// 											)
+	// 									);
+			
+	// 		foreach($users as $user) {
+
+	// 			$array[] = array('<img src="/jacob-message/img/upload/' . $user["User"]["image"] . '"/>');
+	// 			echo $array;
+	// 		}
+	// 	}
+	// }
+
 	public function search() {
 
-		$this->autoRender = false;
-		if ($this->request->is('ajax')) {
-			$search = $this->request->data['search'];
-			$this->loadModel('User');
-			$users = $this->User->find('all',array(
-												"conditions" => array(
-													"name LIKE '%" . $search . "%' AND to_id = ".$this->Session->read('Auth.User.id')
-													)
-												)
-										);
-			
-			foreach($users as $user) {
-
-				$array[] = array('<img src="/jacob-message/img/upload/' . $user["User"]["image"] . '"/>');
-				echo $array;
-			}
-		}
+		$this->layout = 'main';
 	}
-
 
 
 }

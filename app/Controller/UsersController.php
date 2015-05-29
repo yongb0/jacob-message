@@ -58,7 +58,7 @@ class UsersController extends AppController {
                     $this->request->data['User']['modified_ip'] = $this->request->clientIp();
                     // $this->User->save($this->request->data);
                     if ($this->User->save($this->request->data)) {
-                        $this->Session->setFlash('User updated');
+                        $this->Session->setFlash('<div class="alert alert-warning">User updated</div>');
                         $this->redirect(array('action' => 'profile'));
                     }
                 }
@@ -68,7 +68,7 @@ class UsersController extends AppController {
                     $this->request->data['User']['image'] = $this->Session->read('Auth.User.image');
                     // $this->User->save($this->request->data);
                     if ($this->User->save($this->request->data)) {
-                        $this->Session->setFlash('User updated');
+                        $this->Session->setFlash('<div class="alert alert-warning">User updated</div>');
                         $this->redirect(array('action' => 'profile'));
                 }
                 

@@ -63,10 +63,10 @@
 </div>
 <h2>Messages</h2>
 <!-- <button><?php // echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button> -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Register Here!</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Compose Message</button>
 <br>
 <hr>
-<?php echo $this->Form->input('',array('type' => 'text', 'name' => 'data[Message][to_id]', 'id' => 'search_name', 'class' => 'form-control', 'placeholder' => 'Search..', 'value' => '')); ?><br>
+<br><hr>
 <div class="alert alert-info">
 	
 </div>
@@ -92,14 +92,14 @@
 ?>
 
 
-    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm">
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">x</span>
                 </button>
-                <h4 class="modal-title">Register</h4>       
+                <h4 class="modal-title">Compose Message</h4>       
             </div>
             <div class="modal-body">
                 <div class="users form">
