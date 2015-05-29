@@ -61,42 +61,47 @@ class MessagesController extends AppController {
 	}
 
 
-	public function send() {
-
-		$this->autoRender = false;
-		
-		$from = $this->Session->read('Auth.User.id');
-		if ($this->request->data['Message']['to_id'] == 0 OR $this->request->data['Message']['to_id'] == '') {
-			$this->Session->setFlash(__('<div class="alert alert-danger">Receiver is required!</div>'));
-			$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
-			} else {
-				if ($this->request->is('post')) {
-					$this->request->data['Message']['from_id'] = $from;
-					$this->request->data['Message']['status'] = 1;
-					$this->Message->create();
-					if ($this->Message->save($this->request->data)) {
-						$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
-						$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
-					}
-				}
-			}
-	}
-
 	// public function send() {
+
 	// 	$this->autoRender = false;
-
-	// 	$data = array(
-	// 			'to_id' => $this->request->data['to'],
-	// 			'content' => $this->request->data['msg'],
-	// 			'from_id' => $this->Session->read('Auth.User.id'),
-	// 			'status' => 1				
-	// 		);
-
-	// 	if ($this->Message->save($data)) {
-	// 		echo 'sent';
-	// 	}
-
+		
+	// 	$from = $this->Session->read('Auth.User.id');
+	// 	if ($this->request->data['Message']['to_id'] == 0 OR $this->request->data['Message']['to_id'] == '') {
+	// 		$this->Session->setFlash(__('<div class="alert alert-danger">Receiver is required!</div>'));
+	// 		$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
+	// 		} else {
+	// 			if ($this->request->is('post')) {
+	// 				$this->request->data['Message']['from_id'] = $from;
+	// 				$this->request->data['Message']['status'] = 1;
+	// 				$this->Message->create();
+	// 				if ($this->Message->save($this->request->data)) {
+	// 					$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
+	// 					$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
+	// 				}
+	// 			}
+	// 		}
 	// }
+
+	public function send() {
+		$this->autoRender = false;
+
+			if ($this->request->is('post')) {
+			$data = array(
+					'to_id' => $this->request->data['to'],
+					'content' => $this->request->data['msg'],
+					'from_id' => $this->Session->read('Auth.User.id'),
+					'status' => 1				
+				);
+
+			if ($this->Message->save($data)) {
+				// echo 'sent';
+				$this->Session->setFlash(__('<div class="alert alert-warning">Message sent!</div>'));
+				$this->redirect(array('controller' => 'messages', 'action' => 'createmessage'));
+
+			}
+		}
+
+	}
 
 
 	// public function reply() {
@@ -135,11 +140,11 @@ class MessagesController extends AppController {
 				'content' => $this->request->data['content'],
 				'status' => 1
 				);
-
+				$this->Message->create();
 			if ($this->Message->save($data)) {
 				echo 'success!';
-				return false;
-				// $this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['to']));
+				
+				$this->redirect(array('controller' => 'messages', 'action' => 'conversation', $this->request->data['to']));
 			}
 		}
 	}

@@ -62,36 +62,67 @@
     <h3 class="text-muted"><?php echo $this->Html->link('Home', array('controller' => 'users', 'action' => 'home')); ?></h3>
 </div>
 <h2>Messages</h2>
-<button><?php echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button>
-<br>
-<hr>
-<?php echo $this->Form->input('',array('type' => 'text', 'name' => 'data[Message][to_id]', 'id' => 'search_name', 'class' => 'form-control', 'placeholder' => 'Search..', 'value' => '')); ?><br>
-<div class="alert alert-info">
+<!-- <button><?php // echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button> -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Compose Message</button>
+
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <h4 class="modal-title">Register</h4>       
+            </div>
+            <div class="modal-body">
+                <div class="users form">
+                    <?php echo $this->Form->create('Message', array('controller' => 'messages', 'action' => 'send', 'id' => 'frm_send')); ?>
+                      <select name="data[Message][to_id]" id="users" class="form-control" style="width:300px; height: 30px;" id="to" >
+                        <option value="0">Send to</option>
+                            <?php foreach ($users as $user) { ?>
+                            <?php if ($user['User']['id'] != $this->Session->read('Auth.User.id'))  { ?>
+                        <option value="<?php echo $user['User']['id']; ?>"><?php echo $user['User']['name']; ?></option>
+                            <?php } ?>
+                            <?php } ?>
+                      </select>
+                      <br>
+                        <?php echo $this->Form->textarea('content',array('type'=>'text', 'id' => 'msg','name' => 'data[Message][content]', 'class' => 'form-control', 'placeholder' => 'Message', 'style' => 'margin: 0px; width: 490px; height: 100px;')); ?><br>
+                        <?php echo $this->Form->submit(__('Send')); ?>
+                        <?php echo $this->Form->end(); ?>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <hr>
+    <?php echo $this->Form->input('',array('type' => 'text', 'name' => 'data[Message][to_id]', 'id' => 'search_name', 'class' => 'form-control', 'placeholder' => 'Search..', 'value' => '')); ?><br>
+    <div class="alert alert-info">
 	
-</div>
-<?php //echo $this->Form->input(' ',array('type' => 'text','name' => 'data[Message][name]', 'class' => 'form-control', 'placeholder' => 'Search...')); ?><br>
-<hr>
-<?php foreach($messages as $message): ?>
-<?php if ($message['Message']['from_id'] != $this->Session->read('Auth.User.id')) { ?>
-<div class="alert alert-info" id='message'>
-<?php echo $this->Html->image('upload/' . $message['User']['image'], array('height' => 120, 'width' => 120)); ?>
-	<h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['from_id']) ); ?></h3>
-	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
-	<p id="message_content"><?php echo $message['Message']['content']; ?></p><hr>
-	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
-	<button id='#message'><?php echo $this->Html->link('View Conversation', array('controller' => 'messages', 'action' => 'conversation', $message['Message']['from_id'])); ?></button>
-	<p id='delete'>click me</p>
-</div>
+    </div>
+    <?php //echo $this->Form->input(' ',array('type' => 'text','name' => 'data[Message][name]', 'class' => 'form-control', 'placeholder' => 'Search...')); ?><br>
+    <hr>
+    <?php foreach($messages as $message): ?>
+    <?php if ($message['Message']['from_id'] != $this->Session->read('Auth.User.id')) { ?>
+        <div class="alert alert-info" id='message'>
+            <?php echo $this->Html->image('upload/' . $message['User']['image'], array('height' => 120, 'width' => 120)); ?>
+	        <h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['from_id']) ); ?></h3>
+        	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
+        	<p id="message_content"><?php echo $message['Message']['content']; ?></p><hr>
+        	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
+        	<button id='#message'><?php echo $this->Html->link('View Conversation', array('controller' => 'messages', 'action' => 'conversation', $message['Message']['from_id'])); ?></button>
+        	<p id='delete'>click me</p>
+        </div>
 	<?php } ?>
 
-<?php  ?>
-<?php 
-	endforeach;
-	unset($message);
-?>
+    <?php  ?>
+    <?php 
+    	endforeach;
+    	unset($message);
+    ?>
 
-<nav>
-	<ul class="pager">
-		<li><?php echo $this->Paginator->next(__('Show more..', true) . '', array(), null, array('class' => 'disabled'));?></li>
-	</ul>
-</nav>
+    <nav>
+    	<ul class="pager">
+    		<li><?php echo $this->Paginator->next(__('Show more..', true) . '', array(), null, array('class' => 'disabled'));?></li>
+    	</ul>
+    </nav>

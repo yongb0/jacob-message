@@ -15,10 +15,10 @@
 				alert('must contain!');
 			} else {
 				// $.post(action, data, function(data) {
-					alert('sent!');
-				});
+					alert('sent!')
+				}
 
-			}
+			
 
 		});
 	});

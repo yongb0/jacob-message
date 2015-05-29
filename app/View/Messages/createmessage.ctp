@@ -13,7 +13,7 @@
                   to : to,
                   msg : msg
             };
-            $.post(url, data, function (data){
+            $.post(url, data, function(data){
               alert('message sent!');
             })
           }
@@ -37,7 +37,7 @@
 </div>
 <h1>Create New Message</h1>
 <?php echo $this->Form->create('Message', array('controller' => 'messages', 'action' => 'send', 'id' => 'frm_send')); ?>
-  <select name="data[Message][to_id]" id="users" class="form-control" style="width:300px; height: 30px;" id="to">
+  <select name="data[Message][to_id]" id="users" class="form-control" style="width:300px; height: 30px;" id="to" >
     <option value="0">Send to</option>
     <?php foreach ($users as $user) { ?>
     <?php if ($user['User']['id'] != $this->Session->read('Auth.User.id'))  { ?>
