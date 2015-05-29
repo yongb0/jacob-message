@@ -1,25 +1,28 @@
 <script>
-  $(document).ready(function() {
-      $("#frm_send").submit(function(){
-          var to = $("#to").val();
-          var msg = $("#msg").val();
-          var url = $("#frm_send")[0].action;
+  // $(document).ready(function() {
+  //     $("#frm_send").submit(function(){
+  //         var to = $("#to").val();
+  //         var msg = $("#msg").val();
+  //         var url = $("#frm_send")[0].action;
 
-          if (to.length == 0 && msg.length == 0) {
-            alert('recepient and message is required');
-            return false;
-          } else {
-            var data = {
-                  to : to,
-                  msg : msg
-            };
-            $.post(url, data, function(data){
-              alert('message sent!');
-            })
-          }
-      });
-  });
+  //         if (to.length == 0 && msg.length == 0) {
+  //           alert('recepient and message is required');
+  //           return false;
+  //         } else {
+  //           var data = {
+  //                 to : to,
+  //                 msg : msg
+  //           };
+  //           $.post(url, data, function(data){
+  //             alert('message sent!');
+  //           })
+  //         }
+  //     });
+  // });
 </script>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
        $("#users").select2({});
@@ -45,6 +48,7 @@
     <?php } ?>
     <?php } ?>
   </select>
+  <hr>
 <?php echo $this->Form->textarea('content',array('type'=>'text', 'id' => 'msg','name' => 'data[Message][content]', 'class' => 'form-control', 'placeholder' => 'Message', 'style' => 'margin: 0px; width: 490px; height: 100px;')); ?><br>
 <?php echo $this->Form->submit(__('Send')); ?>
 <?php echo $this->Form->end(); ?>
