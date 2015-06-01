@@ -2,7 +2,6 @@
 <script type="text/javascript">
 	var baseURL = '<?php echo $this->webroot; ?>';
 </script>
-
 <script>
     $(document).ready(function() {
         $('#delete').click(function() {
@@ -62,9 +61,7 @@
     <h3 class="text-muted"><?php echo $this->Html->link('Home', array('controller' => 'users', 'action' => 'home')); ?></h3>
 </div>
 <h2>Messages</h2>
-<!-- <button><?php // echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button> -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Compose Message</button>
-<br>
+ <button><?php  echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button> 
 <hr>
 <br><hr>
 <div class="alert alert-info">
@@ -92,34 +89,6 @@
 ?>
 
 
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">x</span>
-                </button>
-                <h4 class="modal-title">Compose Message</h4>       
-            </div>
-            <div class="modal-body">
-                <div class="users form">
-                   <?php echo $this->Form->create('Message', array('controller' => 'messages', 'action' => 'send', 'id' => 'frm_send')); ?>
-                        <select name="data[Message][to_id]" id="users" class="form-control" style="width:300px; height: 30px;" id="to" >
-                             <option value="0">Send to</option>
-                                <?php foreach ($users as $user) { ?>
-                                <?php if ($user['User']['id'] != $this->Session->read('Auth.User.id'))  { ?>
-                            <option value="<?php echo $user['User']['id']; ?>"><?php echo $user['User']['name']; ?></option>
-                                <?php } ?>
-                                <?php } ?>
-                        </select>
-                        <?php echo $this->Form->textarea('content',array('type'=>'text', 'id' => 'msg','name' => 'data[Message][content]', 'class' => 'form-control', 'placeholder' => 'Message', 'style' => 'margin: 0px; width: 490px; height: 100px;')); ?><br>
-                        <?php echo $this->Form->submit(__('Send')); ?>
-                        <?php echo $this->Form->end(); ?>
-                </div>
-            </div>
-        </div>
-      </div>
-    </div>
 <nav>
 	<ul class="pager">
 		<li><?php echo $this->Paginator->next(__('Show more..', true) . '', array(), null, array('class' => 'disabled'));?></li>

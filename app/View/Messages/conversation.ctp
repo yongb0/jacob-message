@@ -5,11 +5,11 @@
 		$("#action").submit(function(){
 			var to = $("#from_id").val();
 			var content = $("#content").val();
-			var from = $("#from").val();
+			var from = $("#from_id").val();
 			var action = $("#action")[0].action;
 			var data = {
 				to : to,
-				content : content
+				content : content,
 				from : from
 			};
 
@@ -17,15 +17,19 @@
 				alert('must contain!');
 			} else {
 				$.post(action, data, function(data) {
-					alert(data);
+					alert('message sent!');
+					// return false;
+					
 				});
 
+				
 			}
-			return false;
 
 		});
-	});
 
+
+
+	});
 
 
 </script>
@@ -51,7 +55,7 @@
 <?php $url = $this->params['pass']; ?>
 <?php foreach($url as $u) : endforeach; ?>
 <?php echo $this->Form->create('', array('controller' => 'messages', 'action' => 'reply', 'id' => 'action'  )); ?>
-<?php echo $this->Form->hidden('', array('value' => $u, 'name' => 'data[Message][to_id]','id' => 'from_id')); ?>
+<?php echo $this->Form->hidden('to_id', array('value' => $u, 'id' => 'from_id')); ?>
 <?php echo $this->Form->textarea('content', array('class' => 'form-control','id' => 'content', 'placeholder' => 'Reply..')); ?>
 <?php echo $this->Form->button(__('Send'), array('class' => 'btn btn-primary')); ?>
 <?php echo $this->Form->end(); ?>
