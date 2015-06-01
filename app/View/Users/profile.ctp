@@ -1,6 +1,5 @@
 <?php // pr($profile); ?>
 
-
 <script>
 $(document).ready(function() {
   
@@ -13,7 +12,10 @@ $(document).ready(function() {
   $( "#datepicker" ).datepicker();
 });
 </script>
-
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right">
@@ -33,7 +35,7 @@ $(document).ready(function() {
 <br>
 Name: <?php echo $this->Form->input('name', array('class' => 'form-control', 'value' => $profile['name'], 'label' => false)); ?>
       
-Birthdate: <?php echo $this->Form->date('birthdate', array('id' => 'datepicker', 'value' => $profile['birthdate'], 'class' => 'form-control')); ?><br>
+Birthdate: <?php echo $this->Form->date('birthdate', array('type' => 'date', 'value' => $profile['birthdate'], 'class' => 'form-control')); ?><br>
 <?php // echo $this->Form->date('birthdate', array('class' => 'form-control', 'dateFormat' => 'mdY', 'value' => $this->Time->format('mm-dd-yyyy',$profile['birthdate']))); ?>
 Gender: 
 <input type="radio" name="data[User][gender]" id="blankRadio1" value="1" <?php if ($profile['gender'] == 1) { echo 'checked = checked' ;} ?> >Male
