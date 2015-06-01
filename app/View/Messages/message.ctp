@@ -49,7 +49,7 @@
 });
 </script>
 
-<?php  //  pr($messages); ?>
+<?php // pr($messages); ?>
 <div class="header clearfix">
     <nav>
       <ul class="nav nav-pills pull-right">
@@ -61,32 +61,43 @@
     <h3 class="text-muted"><?php echo $this->Html->link('Home', array('controller' => 'users', 'action' => 'home')); ?></h3>
 </div>
 <h2>Messages</h2>
- <button><?php  echo $this->Html->link('Compose Message', array('controller' => 'messages', 'action' => 'createmessage')); ?></button> 
-<hr>
+<?php echo $this->Form->create('', array('controller' => 'messages', 'action' => 'createmessage')); ?>
+    <button type="submit">Compose Message</button>
+<?php echo $this->Form->end(); ?>
+
 <br><hr>
 <div class="alert alert-info">
 	
 </div>
-<?php //echo $this->Form->input(' ',array('type' => 'text','name' => 'data[Message][name]', 'class' => 'form-control', 'placeholder' => 'Search...')); ?><br>
 <hr>
 <?php foreach($messages as $message): ?>
 <?php if ($message['Message']['from_id'] != $this->Session->read('Auth.User.id')) { ?>
 <div class="alert alert-info" id='message'>
-<?php echo $this->Html->image('upload/' . $message['User']['image'], array('height' => 120, 'width' => 120)); ?>
-	<h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['from_id']) ); ?></h3>
+<?php echo $this->Html->image('upload/' . $message['User1']['image'], array('height' => 120, 'width' => 120)); ?>
+	<h3>From: <?php echo $this->Html->link($message['User1']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['from_id']) ); ?></h3>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
 	<p id="message_content"><?php echo $message['Message']['content']; ?></p><hr>
 	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
-	<button id='#message'><?php echo $this->Html->link('View Conversation', array('controller' => 'messages', 'action' => 'conversation', $message['Message']['from_id'])); ?></button>
-	<p id='delete'>click me</p>
-</div>
-	<?php } ?>
+<?php echo $this->Form->create(array('controller' => 'messages', 'action' => 'conversation/'. $message['Message']['from_id'])); ?>
+    <button type="submit">View Conversation</button>
+<?php echo $this->Form->end(); ?>
 
-<?php  ?>
+</div>
+	<?php } else { ?>
+<div class="alert alert-success" id='message'>
+<?php echo $this->Html->image('upload/' . $message['User1']['image'], array('height' => 120, 'width' => 120, 'class' => 'float-left ')); ?>
+    <h3>To: <?php echo $this->Html->link($message['User2']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['from_id']) ); ?></h3>
+    <a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
+    <p id="message_content"><?php echo $message['Message']['content']; ?></p><hr>
+    <p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
+</div>
+
 <?php 
-	endforeach;
-	unset($message);
+    } 
+    endforeach; 
+    unset($message);
 ?>
+
 
 
 <nav>

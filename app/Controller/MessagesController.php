@@ -15,27 +15,39 @@ class MessagesController extends AppController {
 		$this->set(compact('messages'));
 	}
 
+	// ORIGINAL
+	// public  function message() {
+	// 	$this->layout = 'main';
+ //  		$db = ClassRegistry::init('Message')->getDataSource();
+ //  		$data = $db->fetchAll(
+	//  	 'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`,
+	//  	  `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`,
+	//  	   `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`,
+	//  	    `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `messages` AS `Message` LEFT JOIN
+	//  	     `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
+	//  	      status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 10'
+	//   		);
 
-	public  function message() {
+	//   	$this->set('messages', $data);
+
+		// $this->loadModel('User');
+		// $Users = $this->User->find('all');
+		// $this->set('users', $Users);
+	 // }
+
+	 public  function message() {
 		$this->layout = 'main';
   		$db = ClassRegistry::init('Message')->getDataSource();
   		$data = $db->fetchAll(
-	 	 'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`,
-	 	  `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`,
-	 	   `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`,
-	 	    `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `messages` AS `Message` LEFT JOIN
-	 	     `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
-	 	      status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 10'
+	 	 'SELECT * FROM `messages` AS `Message` 
+	 	 LEFT JOIN `users` AS `User1` ON (`Message`.`from_id` = `User1`.`id`) 
+	 	 LEFT JOIN users AS User2 ON (`Message`.`to_id` = `User2`.`id`) 
+	 	 WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
+	 	   	   status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 10'
 	  		);
 
 	  	$this->set('messages', $data);
-
-		$this->loadModel('User');
-		$Users = $this->User->find('all');
-		$this->set('users', $Users);
 	 }
-
-
 
 
 	// ORIGINAL

@@ -1,35 +1,35 @@
 <?php // pr($messages); ?>
 <script type="text/javascript">
 	
-	$(document).ready(function() {
-		$("#action").submit(function(){
-			var to = $("#from_id").val();
-			var content = $("#content").val();
-			var from = $("#from_id").val();
-			var action = $("#action")[0].action;
-			var data = {
-				to : to,
-				content : content,
-				from : from
-			};
+	// $(document).ready(function() {
+	// 	$("#action").submit(function(){
+	// 		var to = $("#from_id").val();
+	// 		var content = $("#content").val();
+	// 		var from = $("#from_id").val();
+	// 		var action = $("#action")[0].action;
+	// 		var data = {
+	// 			to : to,
+	// 			content : content,
+	// 			from : from
+	// 		};
 
-			if (content.length == 0 && to.length == 0) {
-				alert('must contain!');
-			} else {
-				$.post(action, data, function(data) {
-					alert('message sent!');
-					// return false;
+	// 		if (content.length == 0 && to.length == 0) {
+	// 			alert('must contain!');
+	// 		} else {
+	// 			$.post(action, data, function(data) {
+	// 				alert('message sent!');
+	// 				// return false;
 					
-				});
+	// 			});
 
 				
-			}
+	// 		}
 
-		});
+	// 	});
 
 
 
-	});
+	// });
 
 
 </script>
