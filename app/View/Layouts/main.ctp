@@ -42,7 +42,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<style type="text/css">
 	
 	.float-left{
-		margin-left: 550px;
+		margin-left: 500px;
 	}
 	.from{
 		margin-left: 50px;

@@ -15,61 +15,103 @@ class MessagesController extends AppController {
 		$this->set(compact('messages'));
 	}
 
+	
+
+
+
 	// ORIGINAL
 	// public  function message() {
-	// 	$this->layout = 'main';
+	// $this->layout = 'main';
  //  		$db = ClassRegistry::init('Message')->getDataSource();
  //  		$data = $db->fetchAll(
-	//  	 'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`,
-	//  	  `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`,
-	//  	   `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`,
-	//  	    `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `messages` AS `Message` LEFT JOIN
-	//  	     `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
-	//  	      status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 10'
-	//   		);
+	// 	 'SELECT * FROM `messages` AS `Message` 
+	// 	 LEFT JOIN `users` AS `User1` ON (`Message`.`from_id` = `User1`.`id`) 
+	// 	 LEFT JOIN users AS User2 ON (`Message`.`to_id` = `User2`.`id`) 
+	// 	 WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
+	// 	   	   status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 5'
+	//  		);
 
-	//   	$this->set('messages', $data);
+	//  	$this->set('messages', $data);
+	// }
 
-		// $this->loadModel('User');
-		// $Users = $this->User->find('all');
-		// $this->set('users', $Users);
-	 // }
+	public function message() {
 
-	 public  function message() {
 		$this->layout = 'main';
-  		$db = ClassRegistry::init('Message')->getDataSource();
-  		$data = $db->fetchAll(
-	 	 'SELECT * FROM `messages` AS `Message` 
-	 	 LEFT JOIN `users` AS `User1` ON (`Message`.`from_id` = `User1`.`id`) 
-	 	 LEFT JOIN users AS User2 ON (`Message`.`to_id` = `User2`.`id`) 
-	 	 WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
-	 	   	   status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 10'
-	  		);
+		
+		$this->paginate = array(
+				'fields' => '*',
+				'conditions' => array('to_id = '.$this->Session->read('Auth.User.id').' AND status = 1 OR from_id = '.$this->Session->read('Auth.User.id').''),
+				'limit' => 5,
+				'order' => 'Message.id desc',
+				'joins' => array(
+								array(
+									'type' => 'LEFT',
+									'table' => 'users',
+									'alias' => 'User1',
+									'conditions' => array('User1.id = Message.from_id')
+									),
+									array(
+										'type' => 'LEFT',
+										'table' => 'users',
+										'alias' => 'User2',
+										'conditions' => array('User2.id = Message.to_id')
+									)
+								),
+							
+			);
 
-	  	$this->set('messages', $data);
-	 }
+		$messages = $this->paginate('Message');
+		$this->set('messages', $messages);
+	}
 
 
-	// ORIGINAL
+	public function conversation($id = null) {
 
-	 public function conversation($id = null) {
+		$this->layout = 'main';
+		
+		$this->paginate = array(
+				'fields' => '*',
+				'conditions' => array('(to_id = '.$this->Session->read('Auth.User.id').' AND from_id = '.$id.') 
+										OR (to_id = '.$id.' 
+										AND from_id = '.$this->Session->read('Auth.User.id').') 
+										AND status = 1'),
+				'limit' => 5,
+				'order' => 'Message.id desc',
+				'joins' => array(
+								array(
+									'type' => 'LEFT',
+									'table' => 'users',
+									'alias' => 'User',
+									'conditions' => array('User.id = Message.from_id')
+									)
+								)
+							
+			);
 
-	 	$this->layout = 'main';
-  		$db = ClassRegistry::init('Message')->getDataSource();
-  		$data = $db->fetchAll(
+		$messages = $this->paginate('Message');
+		$this->set('messages', $messages);
+	}
+
+	 // ORIGINAL
+
+	 // public function conversation($id = null) {
+
+	 // 	$this->layout = 'main';
+  	 // 	$db = ClassRegistry::init('Message')->getDataSource();
+  	 // 		$data = $db->fetchAll(
 	 	 
-		 	      'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`, 
-		 	      `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`, 
-		 	      `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`, 
-		 	      `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `messages` AS `Message` LEFT JOIN
-		 	       `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE (to_id = '.$this->Session->read('Auth.User.id').' AND from_id = '.$id.') OR (to_id = '.$id.' AND from_id = '.$this->Session->read('Auth.User.id').')  
-		 	       AND status = 1 ORDER BY `Message`.`id` desc LIMIT 10'
-	 	       );
+		//  	      'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`, 
+		//  	      `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`, 
+		//  	      `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`, 
+		//  	      `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `messages` AS `Message` LEFT JOIN
+		//  	       `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE (to_id = '.$this->Session->read('Auth.User.id').' AND from_id = '.$id.') OR (to_id = '.$id.' AND from_id = '.$this->Session->read('Auth.User.id').')  
+		//  	       AND status = 1 ORDER BY `Message`.`id` desc LIMIT 10'
+	 // 	       );
 	  
-	  	$this->set('messages', $data);
+	 //  	$this->set('messages', $data);
 
 
-	 }
+	 // }
 
 
 	public function createmessage() {

@@ -65,7 +65,7 @@
 <?php if ($this->Session->read('Auth.User.id') != $message['Message']['from_id']) { ?>
 <div class="alert alert-info">
 		<?php echo $this->Html->image('upload/' . $message['User']['image'], array('id' => 'img', 'height' => '120', 'width' => '120')); ?><br>
-	<h3>From: <?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['User']['id']) ); ?></h3>
+	<h3><?php echo $this->Html->link($message['User']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['User']['id']) ); ?></h3>
 	<a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
 	<p><?php echo $message['Message']['content']; ?></p><hr>
 	<p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
@@ -88,7 +88,8 @@
 
 <?php unset($message); ?>
 <nav>
-	<ul class="pager">
-		<li><?php echo $this->Paginator->next(__('Show more..', true) . '', array(), null, array('class' => 'enable'));?></li>
-	</ul>
+  <ul class="pager">
+    <li class="previous disabled"><?php echo $this->Paginator->prev(__('..Previous', true), array(), null, array('class'=>'disabled'));?></li>
+    <li class="next"><?php echo $this->Paginator->next(__('Next..', true), array(), null, array('class' => 'disabled'));?></li>
+  </ul>
 </nav>

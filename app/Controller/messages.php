@@ -47,4 +47,25 @@ public function message() {
 		);
 		$this->set( 'widgets', $this->paginate( $this->Widget ) );
 	}
+
+
+	// 6/2/2015
+	
+	// public  function message() {
+	// $this->layout = 'main';
+ 	// $db = ClassRegistry::init('Message')->getDataSource();
+ 	// $data = $db->fetchAll(
+	//  	 'SELECT `Message`.`id`, `Message`.`to_id`, `Message`.`from_id`, `Message`.`content`, `Message`.`created`,
+	//  	  `Message`.`modified`, `Message`.`status`, `User`.`id`, `User`.`name`, `User`.`email`, `User`.`password`,
+	//  	   `User`.`image`, `User`.`gender`, `User`.`birthdate`, `User`.`hobby`, `User`.`last_login_time`, `User`.`created`,
+	//  	    `User`.`modified`, `User`.`created_ip`, `User`.`modified_ip` FROM `messages` AS `Message` LEFT JOIN
+	//  	     `users` AS `User` ON (`Message`.`from_id` = `User`.`id`) WHERE to_id = '.$this->Session->read('Auth.User.id').' AND
+	//  	      status = 1 OR from_id = '.$this->Session->read('Auth.User.id').'  ORDER BY `Message`.`id` desc LIMIT 10'
+	//   		);
+	// $this->set('messages', $data);
+
+	// $this->loadModel('User');
+	// $Users = $this->User->find('all');
+	// $this->set('users', $Users);
+	// }
 ?>

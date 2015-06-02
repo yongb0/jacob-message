@@ -66,9 +66,7 @@
 <?php echo $this->Form->end(); ?>
 
 <br><hr>
-<div class="alert alert-info">
-	
-</div>
+
 <hr>
 <?php foreach($messages as $message): ?>
 <?php if ($message['Message']['from_id'] != $this->Session->read('Auth.User.id')) { ?>
@@ -84,9 +82,9 @@
 
 </div>
 	<?php } else { ?>
-<div class="alert alert-success" id='message'>
-<?php echo $this->Html->image('upload/' . $message['User1']['image'], array('height' => 120, 'width' => 120, 'class' => 'float-left ')); ?>
-    <h3>To: <?php echo $this->Html->link($message['User2']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['from_id']) ); ?></h3>
+<div class="alert alert-success from" id='message'>
+<?php echo $this->Html->image('upload/' . $message['User2']['image'], array('height' => 120, 'width' => 120, 'class' => 'float-left ')); ?>
+    <h3>To: <?php echo $this->Html->link($message['User2']['name'], array('controller' => 'users', 'action' => 'userprofile', $message['Message']['to_id']) ); ?></h3>
     <a href=""><h4><?php //echo $message['Message']['from_id']; ?></h4></a>
     <p id="message_content"><?php echo $message['Message']['content']; ?></p><hr>
     <p class="right">Sent on <?php echo $message['Message']['created']; ?></p>
@@ -101,7 +99,11 @@
 
 
 <nav>
-	<ul class="pager">
-		<li><?php echo $this->Paginator->next(__('Show more..', true) . '', array(), null, array('class' => 'disabled'));?></li>
-	</ul>
+  <ul class="pager">
+    <li class="previous disabled"><?php echo $this->Paginator->prev(__('..Previous', true), array(), null, array('class'=>'disabled'));?></li>
+    <li class="next"><?php echo $this->Paginator->next(__('Next..', true), array(), null, array('class' => 'disabled'));?></li>
+  </ul>
 </nav>
+
+<?php // echo $this->Paginator->numbers(array(   'class' => 'numbers'     ));?>
+<?php // echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
